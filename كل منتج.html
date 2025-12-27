@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title> كل منتج</title>
+    <link rel="stylesheet" href="/assests/style.css">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  /* --- إعدادات عامة --- */
+
+/* --- تخطيط صفحة المنتج (الجزء العلوي) --- */
+.product-page {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+    display: flex;
+    gap: 40px; /* مسافة بين الصور والمعلومات */
+    align-items: flex-start;
+    margin-bottom: 40px;
+    flex-direction: row-reverse
+}
+
+/* --- معرض الصور (الجانب الأيمن/الأيسر حسب الصورة) --- */
+/* في الصورة المعرض يظهر كصندوق رمادي */
+.product-gallery {
+    flex: 1; /* يأخذ مساحة متساوية */
+
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.back-arrow {
+ 
+    top: 20px;
+    right: 20px;
+    font-size: 20px;
+    color: #666;
+    text-decoration: none;
+}
+
+.main-img {
+    width: 80%;
+    max-width: 300px;
+    height: auto;
+    object-fit: contain;
+    margin-bottom: 20px;
+    mix-blend-mode: multiply; /* لدمج خلفية الصورة إذا كانت بيضاء مع الرمادي */
+}
+
+.thumbs {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.thumbs img {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: 0.2s;
+    background: #fff;
+    padding: 5px;
+}
+
+.thumbs img:hover {
+    border-color: #b91c1c;
+}
+
+/* --- معلومات المنتج (الجانب النصي) --- */
+.product-info {
+    flex: 1.2; /* النص يأخذ مساحة أكبر قليلاً */
+}
+
+.product-info h2 {
+    font-size: 22px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* جعل العنوان "وصف المنتج" بارز */
+.product-info h5 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #000;
+}
+
+.product-info p {
+    color: #666;
+    line-height: 1.8;
+    font-size: 14px;
+    margin-bottom: 25px;
+}
+
+/* --- صندوق السعر الرمادي --- */
+.price-box {
+    background-color: #f3f4f6; /* رمادي فاتح جداً */
+    padding: 15px;
+    text-align: center;
+    border-radius: 8px;
+    font-size: 18px;
+
+    color: #333;
+    margin-bottom: 20px;
+}
+@media (max-width: 757px) {
+    .product-page {
+    padding: 0;
+    }}
+/* --- زر الاستيراد الأحمر --- */
+.import-btn {
+    background-color: #b91c1c; /* اللون الأحمر الغامق */
+    color: #fff;
+    border: none;
+    width: 100%;
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.import-btn:hover {
+    background-color: #991b1b;
+}
+
+/* --- قسم الاقتراحات (الكروت السفلية) --- */
+.section-title {
+    margin-top: 40px;
+    margin-bottom: 20px;
+    font-size: 18px;
+    color: #333;
+}
+
+.product-suggestions {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 20px;
+}
+
+body{
+  background-color: #f6f6f6;
+}
+.product-card {
+    background: #fff;
+    padding: 15px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: row-reverse;
+   
+    gap: 15px;
+    border: 1px solid #eee;
+    direction: ltr;
+}
+
+.product-card img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+        background-color: #f6f6f6;
+}
+
+.product-card .info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-card h3 {
+    font-size: 14px;
+    margin: 0 0 5px;
+}
+
+.product-card .category {
+    font-size: 11px;
+    color: #999;
+    margin-bottom: 5px;
+}
+
+.product-card .price {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.short-desc {
+    font-size: 11px;
+    color: #777;
+    margin: 0;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* --- تعديل للموبايل --- */
+@media (max-width: 768px) {
+    .product-page {
+        flex-direction: column;
+    }
+}
+/* 1. الحاوية عشان الأسهم تكون فوق الصورة بالظبط */
+.main-image-box {
+    position: relative; /* ضروري عشان الأسهم تتحرك بالنسبة للصورة دي مش للصفحة كلها */
+    display: inline-block; /* أو block حسب تنسيقك */
+    width: 100%;
+    padding-right: 44px
+}
+
+/* 2. تنسيق الأزرار المشترك (الشكل المربع الأبيض) */
+.nav-arrow {
+    position: absolute;
+    top: 50%; /* يخليها في نص الطول */
+    transform: translateY(-50%); /* يضبط السنترة بالظبط */
+    background-color: #fff;
+    border: 1px solid #e5e5e5;
+    width: 40px; /* عرض الزر */
+    height: 40px; /* طول الزر */
+    border-radius: 8px; /* حواف دائرية خفيفة */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #555; /* لون السهم */
+    font-size: 16px;
+    z-index: 10; /* عشان يظهر فوق الصورة */
+
+    transition: 0.3s;
+}
+
+/* تأثير لما الماوس ييجي عليها */
+.nav-arrow:hover {
+    background-color: #f9f9f9;
+    border-color: #ccc;
+}
+
+/* 3. تحديد مكان كل زر */
+.right-arrow {
+    right: -21px; /* مسافة من اليمين */
+}
+
+.left-arrow {
+    left: -21px; /* مسافة من اليسار */
+}
+
+/* تنسيق الحاوية لتوزيع العناصر يمين ويسار */
+.product-header {
+    display: flex;
+  
+    align-items: center; /* محاذاة عمودية في المنتصف */
+    margin-bottom: 20px; /* مسافة أسفل العنوان */
+    gap:20px;
+}
+
+/* تنسيق العنوان */
+.p-main-title {
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0; /* إزالة الهوامش الافتراضية */
+    color: #333;
+}
+
+/* تنسيق زر الرجوع (المربع) ليطابق الصورة */
+.back-arrow {
+    width: 40px;      /* عرض المربع */
+    height: 40px;     /* ارتفاع المربع */
+    border: 1px solid #ddd; /* حدود رمادية خفيفة */
+    border-radius: 8px;     /* حواف دائرية */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #555;      /* لون السهم */
+    text-decoration: none;
+    transition: 0.3s;
+    background-color: #fff;
+}
+
+.back-arrow:hover {
+    background-color: #f5f5f5; /* لون عند التمرير */
+    border-color: #ccc;
+}
+.import-btn {
+ 
+    color: #fff;
+}
+
+.import-btn .currency-icon {
+    width: 18px;
+    height: 18px;
+    vertical-align: middle;
+    filter: brightness(0) invert(1);
+}
+
+</style>
+</head>
+
+<body>
+
+
+<div class="topbar">
+    <img src="/image/f9f831a3dca6f5fbcb89a69383cd9de01ac1e52b (1).png" class="logo" >
+<div class="center-section">
+  <div class="search-wrapper">
+    <input type="text" placeholder="ابحث في الصفحات…" class="search-box">
+    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+  </div>
+</div>
+
+    <div class="icons">
+       <label for="showNotifications" class="icon"><img src="/image/notification-2.svg" alt=""></label>
+
+<input type="checkbox" id="showNotifications" hidden>
+
+<div class="notifications-box">
+    <h3>الإشعارات</h3>
+
+    <div class="item">تم شحن الرصيد– منذ يومين</div>
+    <div class="item">تم شحن الرصيد– منذ ٣ أيام</div>
+    <div class="item">تم شحن الرصيد– منذ ٣ أيام</div>
+    <div class="item">تم شحن الرصيد– منذ ٣ أيام</div>
+
+    <a class="more">عرض الكل</a>
+</div>
+
+        <i class="icon">
+              <a href="متجر الثيمات.html" class="iconss ">
+        <img src="/image/icons/Outline/Computers, Devices, Electronics/game.svg" alt="">
+    </a>
+        </i>
+        <i class="icon">  <a href="app.html" class="iconss ">
+         <img src="/image/icons/Outline/setting/category.svg">
+
+    </a></i>
+    </a></i>
+     <i class="icon" id="theme-toggle" style="cursor: pointer;">
+    <img src="image/icons/Outline/Weather/moon.svg">
+</i>
+</i>
+    </div>
+<div class="store-wrapper">
+  <div class="store-select" id="storeBtn">
+    <img src="/image/121df8e4ff69af84b6cdf0af74303de3d79c0e0c.jpg">
+    <span class="flo">متجر زهور</span>
+    <i class="fa-solid fa-chevron-down arrow"></i> <!-- السهم -->
+  </div>
+
+  <div id="dropdownMenu" class="dropdown-menu">
+    <div class="profile-section">
+      <img src="/image/121df8e4ff69af84b6cdf0af74303de3d79c0e0c.jpg" class="profile-img" />
+      <div class="profile-info">
+        <h3>متجر زهور</h3>
+        <p>الباقة المجانية</p>
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button class="visit-btn">زيارة المتجر <i class="fa-solid fa-link" style="font-size: 14px; color: #888;"></i></button>
+      <a href="الاعدادات.html" class="settings-btn">الإعدادات ⚙️</a>
+    </div>
+
+    <ul class="menu-list">
+      <li><a href="باقه المتجر.html"><img src="/image/icons/Outline/Security,car,delivery,Crypto%20Currency,shop/shop.svg" alt=""> باقه المنتجات</a></li>
+      <li><a href="المحفظه.html" class="menu-link"><img src="/image/icons/Outline/Money/wallet-3.svg" alt="">المحفظة والفواتير</a></li>
+      <li class="logout"><i class="fa-solid fa-right-from-bracket"></i> تسجيل الخروج</li>
+    </ul>
+  </div>
+</div>
+
+
+</div>
+ <input type="checkbox" id="menuToggle" hidden>
+<label for="menuToggle" class="menu-btn">☰</label>
+
+
+
+
+
+<aside class="sidebar" id="sidebar">
+    <ul>
+
+        <li class="section-title">عام</li>
+
+        <li  >
+            <a href="home.html">
+                <span class="icon"><img src="/image/icons/Outline/Essetional/home-2.svg" alt=""></span> الرئيسية
+            </a>
+        </li>
+
+
+
+        <li class="has-submenu ">
+    <div class="menu-item">
+
+            <span class="icon"><img src="image/icons/Outline/Security,car,delivery,Crypto%20Currency,shop/shopping-cart.svg" alt=""></span> الطلبات
+
+        <span class="arrow"><i class="fa-solid fa-angle-down"></i></span>
+    </div>
+
+    <!-- القائمة اللي هتظهر -->
+    <ul class="submenu">
+               <li><a href="الطلبات.html">الطلبات</a></li>
+
+       <li><a href="قسائم.html">القسائم</a></li>
+    </ul>
+</li>
+
+
+       <li class="has-submenu">
+    <div class="menu-item">
+
+            <span class="icon"><img src="/image/icons/Outline/Security,car,delivery,Crypto%20Currency,shop/shop-add.svg" alt=""></span> المنتجات
+
+        <span class="arrow"><i class="fa-solid fa-angle-down"></i></span>
+    </div>
+
+    <!-- القائمة اللي هتظهر -->
+    <ul class="submenu">
+        <li><a href="المنتجات.html">المنتجات</a></li>
+        <li><a href=" القسائم.html">الأقسام</a></li>
+    </ul>
+</li>
+
+
+        <li>
+            <a href="العملاء.html">
+                <span class="icon"><img src="/image/icons/Outline/users/profile-2user.svg" alt=""></span> العملاء
+            </a>
+        </li>
+
+        <li>
+                       <a href="/التقارير.html">
+
+                <span class="icon"><img src="/image/icons/Outline/Business/chart-1.svg" alt=""></span> التقارير
+            </a>
+        </li>
+
+        <li >
+            <a href="التقيمات.html">
+                <span class="icon"><i class="fa-regular fa-star"></i></span> التقييمات
+            </a>
+        </li>
+
+        <li>
+            <a href="الصفحه التعريفيه.html">
+                <span class="icon"><img src="/image/icons/Outline/Archive,time/book-saved.svg" alt=""></span> الصفحات التعريفية
+            </a>
+        </li>
+
+        <li class="section-title">أدوات مساعدة</li>
+
+        <li>
+            <a href="خدمات التاجر.html">
+                <span class="icon"><i class="fa-regular fa-clone"></i></span> خدمات التاجر
+            </a>
+        </li>
+
+        <li>
+            <a href="تفعيل الشحن.html">
+                <span class="icon"><img src="/image/icons/Outline/Security,car,delivery,Crypto%20Currency,shop/ship.svg" alt=""></span> تفعيل الشحن
+            </a>
+        </li>
+
+        <li>
+            <a href="خمات الذكاء الصناعي فعيل.html">
+                <span class="icon"><img src="/image/icons/Outline/content edit/task.svg" alt=""></span> خدمات الذكاء الاصطناعي
+            </a>
+        </li>
+
+        <li class="section-title">الموردين</li>
+
+        <li class="active">
+            <a href="الموردين.html">
+                <span class="icon"><img src="/image/icons/Outline/Search,Astrology,Building/building.svg" alt=""></span> المستودعات السعودية
+            </a>
+        </li>
+
+        <li>
+            <a href="المنتجات الرقميه2.html">
+                <span class="icon"><img src="/image/icons/Outline/Computers, Devices, Electronics/monitor-mobbile.svg" alt=""></span> المنتجات الرقمية
+            </a>
+        </li>
+
+    </ul>
+</aside>
+
+
+
+<main class="content">
+
+
+<div class="product-page">
+
+    <!-- صور -->
+   <div class="product-gallery">
+    
+    <div class="main-image-box">
+        <button class="nav-arrow right-arrow" onclick="alert('التالي')">
+            <i class="fa-solid fa-chevron-right"></i>
+        </button>
+
+        <img src="image/0aecc65ea73bcfb386e2a50c65260539310a02a2.png" class="main-img" id="mainImg">
+
+        <button class="nav-arrow left-arrow" onclick="alert('السابق')">
+            <i class="fa-solid fa-chevron-left"></i>
+        </button>
+    </div>
+
+    <div class="thumbs">
+        <img src="image/0aecc65ea73bcfb386e2a50c65260539310a02a2.png" onclick="changeImg(this.src)">
+        <img src="image/0aecc65ea73bcfb386e2a50c65260539310a02a2.png" onclick="changeImg(this.src)">
+        <img src="image/0aecc65ea73bcfb386e2a50c65260539310a02a2.png" onclick="changeImg(this.src)">
+        <img src="image/0aecc65ea73bcfb386e2a50c65260539310a02a2.png" onclick="changeImg(this.src)">
+    </div>
+
+</div>
+
+    <!-- معلومات المنتج -->
+    <div class="product-info">
+
+<div class="product-header">
+   <a href="javascript:history.back()" class="back-arrow">
+        <i class="fa-solid fa-chevron-right"></i> </a>
+    <h2 class="p-main-title">سماعات EchoBeat اللاسلكية</h2>
+    
+   
+</div>
+<h5>وصف المنتج:</h5>
+   
+        <p>
+         سماعات EchoBeat تمنحك تجربة صوتية غامرة بفضل تقنية العزل الذكي وجودة الصوت العالية التي تبرز التفاصيل الدقيقة في الموسيقى والمكالمات. تأتي بتصميم خفيف ومريح للأذن للاستخدام الطويل دون إجهاد، مع علبة شحن صغيرة يمكن حملها بسهولة في الجيب. تدوم بطاريتها حتى 20 ساعة، وهي مثالية للتمارين، الاجتماعات، أو الاستماع أثناء التنقل، مع اتصال بلوتوث مستقر وسريع لجميع الأجهزة.
+        </p>
+
+        <div class="price-box">18.900  <img src="/image/icons/Outline/Money/عملة.svg" alt="" class="currency-icon" style=" width: 18px;
+    height: 18px;
+    display: inline-block;"></div>
+<button class="import-btn">
+  استيراد المنتج 9
+  <img src="/image/icons/Outline/Money/عملة.svg"
+       class="currency-icon">
+</button>
+
+    </div>
+
+</div>
+
+  <h3 class="section-title">اقتراحات من نفس القسم</h3>
+
+    <div class="product-suggestions">
+
+        <div class="product-card">
+            <img src="image/0aecc65ea73bcfb386e2a50c65260539310a02a2.png" alt="product">
+            <div class="info">
+                <h3>سماعات EchoBeat اللاسلكية</h3>
+                <span class="category">الكترونيات</span>
+                <span class="price"> <img src="/image/icons/Outline/Money/عملة.svg" alt="" class="currency-icon" style=" width: 18px;
+    height: 18px;
+    display: inline-block;">18.900</span>
+                <p class="short-desc">
+                    سماعات بلوتوث بجودة صوت نقية وعزل ضوضاء، مع بطارية تدوم حتى 20 ساعة.
+                </p>
+            </div>
+        </div>
+
+       <div class="product-card">
+            <img src="image/0aecc65ea73bcfb386e2a50c65260539310a02a2.png" alt="product">
+            <div class="info">
+                <h3>سماعات EchoBeat اللاسلكية</h3>
+                <span class="category">الكترونيات</span>
+                <span class="price"> <img src="/image/icons/Outline/Money/عملة.svg" alt="" class="currency-icon" style=" width: 18px;
+    height: 18px;
+    display: inline-block;">18.900 </span>
+                <p class="short-desc">
+                    سماعات بلوتوث بجودة صوت نقية وعزل ضوضاء، مع بطارية تدوم حتى 20 ساعة.
+                </p>
+            </div>
+        </div>
+            <div class="product-card">
+            <img src="image/0aecc65ea73bcfb386e2a50c65260539310a02a2.png" alt="product">
+            <div class="info">
+                <h3>سماعات EchoBeat اللاسلكية</h3>
+                <span class="category">الكترونيات</span>
+                <span class="price"> <img src="/image/icons/Outline/Money/عملة.svg" alt="" class="currency-icon" style=" width: 18px;
+    height: 18px;
+    display: inline-block;">18.900 </span>
+                <p class="short-desc">
+                    سماعات بلوتوث بجودة صوت نقية وعزل ضوضاء، مع بطارية تدوم حتى 20 ساعة.
+                </p>
+            </div>
+        </div>
+            <div class="product-card">
+            <img src="image/0aecc65ea73bcfb386e2a50c65260539310a02a2.png" alt="product">
+            <div class="info">
+                <h3>سماعات EchoBeat اللاسلكية</h3>
+                <span class="category">الكترونيات</span>
+                <span class="price"> <img src="/image/icons/Outline/Money/عملة.svg" alt="" class="currency-icon" style=" width: 18px;
+    height: 18px;
+    display: inline-block;">18.900 </span>
+                <p class="short-desc">
+                    سماعات بلوتوث بجودة صوت نقية وعزل ضوضاء، مع بطارية تدوم حتى 20 ساعة.
+                </p>
+            </div>
+        </div>
+            <div class="product-card">
+            <img src="image/0aecc65ea73bcfb386e2a50c65260539310a02a2.png" alt="product">
+            <div class="info">
+                <h3>سماعات EchoBeat اللاسلكية</h3>
+                <span class="category">الكترونيات</span>
+                <span class="price"> <img src="/image/icons/Outline/Money/عملة.svg" alt="" class="currency-icon" style=" width: 18px;
+    height: 18px;
+    display: inline-block;">18.900 </span>
+                <p class="short-desc">
+                    سماعات بلوتوث بجودة صوت نقية وعزل ضوضاء، مع بطارية تدوم حتى 20 ساعة.
+                </p>
+            </div>
+        </div>
+            <div class="product-card">
+            <img src="image/0aecc65ea73bcfb386e2a50c65260539310a02a2.png" alt="product">
+            <div class="info">
+                <h3>سماعات EchoBeat اللاسلكية</h3>
+                <span class="category">الكترونيات</span>
+                <span class="price"> <img src="/image/icons/Outline/Money/عملة.svg" alt="" class="currency-icon" style=" width: 18px;
+    height: 18px;
+    display: inline-block;">18.900 </span>
+                <p class="short-desc">
+                    سماعات بلوتوث بجودة صوت نقية وعزل ضوضاء، مع بطارية تدوم حتى 20 ساعة.
+                </p>
+            </div>
+        </div>
+        
+
+    </div>
+
+</main>
+<script src="/assests/js/كل منتج.js">
+
+</script>
+
+
+<script src="/assests/js/home.js"></script>
+<script src="/assests/js/drop.js"></script>
+<script>
+const themeToggle = document.getElementById('theme-toggle');
+let isDark = false;
+
+themeToggle.addEventListener('click', () => {
+    isDark = !isDark;
+
+    if (isDark) {
+       document.body.style.backgroundColor = '#f6f6f6';
+        document.documentElement.style.filter = 'invert(1) hue-rotate(180deg)';
+
+        // الصور والفيديوهات يجب عكسها مرة أخرى لكي لا تظهر ألوانها غريبة
+        const media = document.querySelectorAll('img, video, .profile-img, .logo');
+        media.forEach(item => item.style.filter = 'invert(1) hue-rotate(180deg)');
+
+        // تغيير شكل الأيقونة
+        themeToggle.querySelector('i').classList.replace('fa-moon', 'fa-sun');
+    } else {
+        // العودة للوضع الطبيعي
+        document.documentElement.style.filter = 'none';
+
+        const media = document.querySelectorAll('img, video, .profile-img, .logo');
+        media.forEach(item => item.style.filter = 'none');
+
+        // العودة لأيقونة القمر
+        themeToggle.querySelector('i').classList.replace('fa-sun', 'fa-moon');
+    }
+});
+  </script>
+</body>
+</html>

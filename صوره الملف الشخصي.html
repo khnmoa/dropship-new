@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>صوره الملف الشخصي</title>
+    <link rel="stylesheet" href="/assests/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  /* حاوية التبويبات (الشريط الرمادي) */
+.tabs {
+    background-color: #e9e9e9;; /* لون رمادي فاتح للخلفية */
+    padding: 5px;
+    border-radius: 8px; /* استدارة الزوايا */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%; /* أو حددي عرضاً معيناً */
+    box-sizing: border-box;
+}
+
+/* تنسيق الروابط لضمان توزيع المساحة */
+.tabs a {
+    flex: 1; /* لجعل كل زر يأخذ مساحة متساوية */
+    text-decoration: none;
+    margin: 0 3px; /* مسافة صغيرة جداً بين الأزرار */
+}
+body{
+  background-color:#f6f6f6
+}
+
+/* تنسيق الأزرار (الوضع العادي) */
+.tab {
+    width: 100%;
+    padding: 8px 15px;
+    border: none;
+    background-color: transparent; /* خلفية شفافة للأزرار غير النشطة */
+    color: #6b7280; /* لون نص رمادي */
+    font-size: 14px;
+    font-family: inherit; /* يأخذ نفس خط الموقع */
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+/* تنسيق الزر النشط (active) - الصندوق الأبيض */
+.tab.active {
+    background-color: #ffffff; /* لون أبيض */
+    color: #000000; /* لون نص أسود */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* ظل خفيف مثل الصورة */
+    font-weight: bold;
+}
+
+
+
+
+
+
+
+    .delete-account {
+        color: #d9534f;
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    /* التابات (الأزرار العلوية) */
+    .tabs {
+        display: flex;
+        background: #f0f0f0;
+        padding: 5px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+
+    .tabs a { flex: 1; text-decoration: none; }
+
+    .tab {
+        width: 100%;
+        padding: 12px;
+        border: none;
+        background: none;
+        cursor: pointer;
+        color: #777;
+        font-weight: 500;
+    }
+
+    .tab.active {
+        background: white;
+        border-radius: 8px;
+        color: #333;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    /* الصندوق الأبيض الرئيسي */
+    .box {
+        background: white;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        text-align: right;
+    }
+
+    .box-title { font-size: 1.2rem; margin-bottom: 5px; }
+    .desc { color: #888; font-size: 0.9rem; margin-bottom: 30px; }
+
+    /* أقسام الصور */
+    .section {
+        margin-bottom: 40px;
+        text-align: right;
+        direction:ltr
+    }
+
+    .section h3 { font-size: 1.1rem; margin-bottom: 5px; }
+    .section p { color: #777; font-size: 0.85rem; margin-bottom: 15px; }
+
+    /* التحكم في مكان الصورة والأزرار كما في الصورة */
+    .image-wrapper.reverse {
+        display: flex;
+        flex-direction: row-reverse; /* يجعل الصورة يسار والأزرار يمين */
+        align-items: center;
+        gap: 20px;
+        justify-content: flex-start;
+    }
+
+    .profile-img {
+        width: 100px;
+        height: 100px;
+       /* دائرية كما في الصورة */
+        object-fit: cover;
+        border: 1px solid #eee;
+    }
+
+    .btn-column {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-end; /* محاذاة الأزرار لليمين */
+    }
+
+    .btn-column button {
+        background: #f9f9f9;
+        border: 1px solid #ddd;
+        padding: 8px 15px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 0.85rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #444;
+        width: 130px; /* توحيد عرض الأزرار */
+        justify-content: center;
+    }
+
+    .btn-column button.danger {
+        color: #888;
+        border: none;
+        background: none;
+    }
+
+    small {
+        display: block;
+        color: #aaa;
+        font-size: 0.75rem;
+        margin-top: 10px;
+    }
+
+    /* شريط الحفظ السفلي */
+    .save-bar {
+        border-top: 1px solid #eee;
+        padding-top: 20px;
+        display: flex;
+    
+        gap: 15px;
+    }
+
+    .save-bar button {
+        padding: 10px 30px;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        background: white;
+        cursor: pointer;
+    }
+
+    .save-bar button.save {
+        background: #c71520; /* اللون الأحمر في الصورة */
+        color: white;
+        border: none;
+    }
+</style>
+  </style>
+</head>
+
+<body>
+<div class="topbar">
+    <img src="/image/f9f831a3dca6f5fbcb89a69383cd9de01ac1e52b (1).png" class="logo" >
+<div class="center-section">
+  <div class="search-wrapper">
+    <input type="text" placeholder="ابحث في الصفحات…" class="search-box">
+    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+  </div>
+</div>
+
+    <div class="icons">
+       <label for="showNotifications" class="icon"><img src="/image/notification-2.svg" alt=""></label>
+
+<input type="checkbox" id="showNotifications" hidden>
+
+<div class="notifications-box">
+    <h3>الإشعارات</h3>
+
+    <div class="item">تم شحن الرصيد– منذ يومين</div>
+    <div class="item">تم شحن الرصيد– منذ ٣ أيام</div>
+    <div class="item">تم شحن الرصيد– منذ ٣ أيام</div>
+    <div class="item">تم شحن الرصيد– منذ ٣ أيام</div>
+
+    <a class="more">عرض الكل</a>
+</div>
+
+        <i class="icon">
+              <a href="متجر الثيمات.html" class="iconss ">
+        <img src="/image/icons/Outline/Computers, Devices, Electronics/game.svg" alt="">
+    </a>
+        </i>
+        <i class="icon">  <a href="app.html" class="iconss ">
+         <img src="/image/icons/Outline/setting/category.svg">
+
+    </a></i>
+    </a></i>
+     <i class="icon" id="theme-toggle" style="cursor: pointer;">
+    <img src="image/icons/Outline/Weather/moon.svg">
+</i>
+</i>
+    </div>
+<div class="store-wrapper">
+  <div class="store-select" id="storeBtn">
+    <img src="/image/121df8e4ff69af84b6cdf0af74303de3d79c0e0c.jpg">
+    <span class="flo">متجر زهور</span>
+    <i class="fa-solid fa-chevron-down arrow"></i> <!-- السهم -->
+  </div>
+
+  <div id="dropdownMenu" class="dropdown-menu">
+    <div class="profile-section">
+      <img src="/image/121df8e4ff69af84b6cdf0af74303de3d79c0e0c.jpg" class="profile-img" />
+      <div class="profile-info">
+        <h3>متجر زهور</h3>
+        <p>الباقة المجانية</p>
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button class="visit-btn">زيارة المتجر <i class="fa-solid fa-link" style="font-size: 14px; color: #888;"></i></button>
+      <a href="الاعدادات.html" class="settings-btn">الإعدادات ⚙️</a>
+    </div>
+
+    <ul class="menu-list">
+      <li><a href="باقه المتجر.html"><img src="/image/icons/Outline/Security,car,delivery,Crypto%20Currency,shop/shop.svg" alt=""> باقه المنتجات</a></li>
+      <li><a href="المحفظه.html" class="menu-link"><img src="/image/icons/Outline/Money/wallet-3.svg" alt="">المحفظة والفواتير</a></li>
+      <li class="logout"><i class="fa-solid fa-right-from-bracket"></i> تسجيل الخروج</li>
+    </ul>
+  </div>
+</div>
+
+
+</div>
+ <input type="checkbox" id="menuToggle" hidden>
+<label for="menuToggle" class="menu-btn">☰</label>
+
+<aside class="sidebar" id="sidebar">
+    <ul>
+
+        <li class="section-title">عام</li>
+
+        <li   >
+            <a href="home.html">
+                <span class="icon"><img src="/image/icons/Outline/Essetional/home-2.svg" alt=""></span> الرئيسية
+            </a>
+        </li>
+
+
+
+        <li class="has-submenu ">
+    <div class="menu-item">
+
+            <span class="icon"><img src="image/icons/Outline/Security,car,delivery,Crypto%20Currency,shop/shopping-cart.svg" alt=""></span> الطلبات
+
+        <span class="arrow"><i class="fa-solid fa-angle-down"></i></span>
+    </div>
+
+    <!-- القائمة اللي هتظهر -->
+    <ul class="submenu">
+               <li><a href="الطلبات.html">الطلبات</a></li>
+
+      <li><a href="قسائم.html">القسائم</a></li>
+    </ul>
+</li>
+
+
+       <li class="has-submenu">
+    <div class="menu-item">
+
+            <span class="icon"><img src="/image/icons/Outline/Security,car,delivery,Crypto%20Currency,shop/shop-add.svg" alt=""></span> المنتجات
+
+        <span class="arrow"><i class="fa-solid fa-angle-down"></i></span>
+    </div>
+
+    <!-- القائمة اللي هتظهر -->
+    <ul class="submenu">
+        <li><a href="المنتجات.html">المنتجات</a></li>
+        <li><a href=" القسائم.html">الأقسام</a></li>
+    </ul>
+</li>
+
+
+        <li>
+            <a href="العملاء.html">
+                <span class="icon"><img src="/image/icons/Outline/users/profile-2user.svg" alt=""></span> العملاء
+            </a>
+        </li>
+
+        <li>
+                       <a href="/التقارير.html">
+
+                <span class="icon"><img src="/image/icons/Outline/Business/chart-1.svg" alt=""></span> التقارير
+            </a>
+        </li>
+
+        <li >
+            <a href="التقيمات.html">
+                <span class="icon"><i class="fa-regular fa-star"></i></span> التقييمات
+            </a>
+        </li>
+
+        <li>
+            <a href="الصفحه التعريفيه.html">
+                <span class="icon"><img src="/image/icons/Outline/Archive,time/book-saved.svg" alt=""></span> الصفحات التعريفية
+            </a>
+        </li>
+
+        <li class="section-title">أدوات مساعدة</li>
+
+        <li>
+            <a href="خدمات التاجر.html">
+                <span class="icon"><i class="fa-regular fa-clone"></i></span> خدمات التاجر
+            </a>
+        </li>
+
+        <li>
+            <a href="تفعيل الشحن.html">
+                <span class="icon"><img src="/image/icons/Outline/Security,car,delivery,Crypto%20Currency,shop/ship.svg" alt=""></span> تفعيل الشحن
+            </a>
+        </li>
+
+        <li>
+            <a href="خمات الذكاء الصناعي فعيل.html">
+                <span class="icon"><img src="/image/icons/Outline/content edit/task.svg" alt=""></span> خدمات الذكاء الاصطناعي
+            </a>
+        </li>
+
+        <li class="section-title">الموردين</li>
+
+        <li>
+            <a href="الموردين.html">
+                <span class="icon"><img src="/image/icons/Outline/Search,Astrology,Building/building.svg" alt=""></span> المستودعات السعودية
+            </a>
+        </li>
+
+        <li>
+            <a href="المنتجات الرقميه2.html">
+                <span class="icon"><img src="/image/icons/Outline/Computers, Devices, Electronics/monitor-mobbile.svg" alt=""></span> المنتجات الرقمية
+            </a>
+        </li>
+
+    </ul>
+</aside>
+
+    <!-- Sidebar -->
+
+
+   <!-- MAIN CONTENT -->
+    <main class="content">
+
+        <div class="title-wrapper">
+            <h2 class="title">الإعدادات</h2>
+            <button class="delete-account">    <img src="image/icons/Outline/Essetional/trash.svg" alt=""> إلغاء المتجر</button>
+        </div>
+
+        <div class="tabs">
+           <a href="اعدادات الحساب.html"> <button class="tab ">المعلومات الشخصية</button></a>
+
+            <a href="صوره الملف الشخصي.html" >   <button class="tab active">صورة الملف الشخصي</button> </a>
+
+          <a href="اعدادات الفاتوره.html" >  <button class="tab">إعدادات الفاتورة</button> </a>
+
+        </div>
+
+        <div class="box">
+
+            <h2 class="box-title">صور الملف الشخصي والصورة المصغرة</h2>
+            <p class="desc">إدارة صورة ملفك الشخصي وعلامة المتجر</p>
+<div class="section">
+    <h3>صور المتجر</h3>
+<p>ستظهر هذه الصورة على ملفك الشخصي وحسابك</p>
+
+
+    <div class="image-wrapper reverse">
+     <img id="profile-preview" src="/image/121df8e4ff69af84b6cdf0af74303de3d79c0e0c.jpg" class="profile-img " >
+        <!-- الزرّين على اليمين -->
+      <div class="btn-column">
+    <button onclick="uploadImage('profile')">
+       <img src="image/icons/Outline/content%20edit/document-upload.svg"> رفع صورة
+    </button>
+
+    <button class="danger" onclick="deleteImage('profile')">
+         <img src="image/icons/Outline/Essetional/trash.svg" alt=""> حذف الصورة
+    </button>
+</div>
+
+    </div>
+ <small>حجم الصورة: ‎660×260 بكسل</small>
+
+</div>
+
+     <div class="section">
+    <h3>الصوره المصغره</h3>
+   <p>تظهر هذه الصورة في علامات تبويب المتصفح والبحث. الحجم الموصى به: ‎512×512 بكسل</p>
+    <div class="image-wrapper reverse">
+     <img id="profile-preview" src="/image/121df8e4ff69af84b6cdf0af74303de3d79c0e0c.jpg" class="profile-img square">
+        <!-- الزرّين على اليمين -->
+       <div class="btn-column">
+    <button onclick="uploadImage('profile')">
+        <img src="image/icons/Outline/content%20edit/document-upload.svg"> رفع صورة
+    </button>
+
+    <button class="danger" onclick="deleteImage('profile')">
+      <img src="image/icons/Outline/Essetional/trash.svg" alt=""> حذف الصورة
+    </button>
+</div>
+  <small>PNG فقط • ‎80×80 بكسل</small>
+            </div>
+            <!-- الصورة المصغرة -->
+
+
+
+
+            <div class="save-bar">
+                <button>إلغاء</button>
+                <button class="save">حفظ التغيرات</button>
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+
+
+<script src="assests/js/صوره الملف الشخصي.js">
+
+</script>
+
+<script src="/assests/js/home.js"></script>
+<script src="/assests/js/drop.js"></script>
+<script>
+const themeToggle = document.getElementById('theme-toggle');
+let isDark = false;
+
+themeToggle.addEventListener('click', () => {
+    isDark = !isDark;
+
+    if (isDark) {
+       document.body.style.backgroundColor = '#f6f6f6';
+        document.documentElement.style.filter = 'invert(1) hue-rotate(180deg)';
+
+        // الصور والفيديوهات يجب عكسها مرة أخرى لكي لا تظهر ألوانها غريبة
+        const media = document.querySelectorAll('img, video, .profile-img, .logo');
+        media.forEach(item => item.style.filter = 'invert(1) hue-rotate(180deg)');
+
+        // تغيير شكل الأيقونة
+        themeToggle.querySelector('i').classList.replace('fa-moon', 'fa-sun');
+    } else {
+        // العودة للوضع الطبيعي
+        document.documentElement.style.filter = 'none';
+
+        const media = document.querySelectorAll('img, video, .profile-img, .logo');
+        media.forEach(item => item.style.filter = 'none');
+
+        // العودة لأيقونة القمر
+        themeToggle.querySelector('i').classList.replace('fa-sun', 'fa-moon');
+    }
+});
+  </script>
+</body>
+
+</html>
