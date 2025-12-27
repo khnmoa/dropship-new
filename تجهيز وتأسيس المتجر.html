@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>تجهيز وتاسيس المتجر</title>
+    <link rel="stylesheet" href="/assests/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  /* ======================================================= */
+/* 📱 Mobile Responsiveness for Services Grid 📱 */
+/* ======================================================= */
+
+@media (max-width: 768px) {
+
+    .content {
+        padding: 15px; /* تأكد من وجود مسافات داخلية مناسبة */
+    }
+
+    /* --- شريط التابات (Tabs Bar) --- */
+    .services-tabs-bar {
+        /* لجعل التابات قابلة للتمرير الأفقي عند ضيق المساحة */
+        width: 100%;
+        overflow-x: auto;
+        white-space: nowrap; /* منع التفاف التابات */
+        padding-bottom: 5px; /* مسافة بسيطة */
+        border-bottom: 1px solid #eee;
+    }
+
+    .services-tabs-bar a {
+        display: inline-block;
+        padding: 10px 12px;
+        font-size: 14px;
+        margin-left: 5px;
+    }
+    
+    /* --- تنسيق شريط البحث والفرز --- */
+    .search-sort-wrapper {
+        flex-direction: column; /* ترتيب العناصر عمودياً */
+        gap: 10px;
+        margin-top: 15px;
+        margin-bottom: 20px;
+    }
+
+    .search-input {
+        width: 100%; /* اجعل البحث بعرض كامل */
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .sort-box {
+        width: 100%; /* اجعل صندوق الفرز بعرض كامل */
+        position: relative;
+    }
+
+    .sort-btn {
+        width: 100%;
+        text-align: right;
+        padding: 10px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .sort-menu {
+        width: 100%;
+        right: 0;
+        left: auto; /* تأكد من الموضع الصحيح في RTL */
+        top: 40px;
+    }
+
+    /* --- شبكة الخدمات (Service Grid) --- */
+    .service-grid {
+        /* إجبار الشبكة على عرض بطاقة واحدة في كل صف */
+        grid-template-columns: 1fr;
+        gap: 20px; /* مسافة بين البطاقات */
+    }
+
+    /* --- تنسيق بطاقة الخدمة الواحدة (Service Box) --- */
+    .service-box {
+        /* تحسين شكل البطاقة للهاتف */
+        padding: 15px;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .service-img {
+        max-width: 100%;
+        height: auto;
+        margin-bottom: 10px;
+    }
+
+    .service-title {
+        font-size: 18px;
+        margin-bottom: 5px;
+    }
+
+    .service-desc {
+        font-size: 14px;
+        margin-bottom: 15px;
+    }
+
+    .info-row {
+        /* ترتيب معلومات السعر والمدة عمودياً أو باستخدام مسافة مناسبة */
+        flex-direction: row;
+        justify-content: space-around;
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .info-row span {
+        font-size: 14px;
+        /* تباعد الأيقونات قليلاً عن النص */
+    }
+
+    .button-row {
+        flex-direction: column; /* ترتيب الأزرار عمودياً */
+        width: 100%;
+        gap: 10px;
+    }
+
+    .details-btn,
+    .order-btn {
+        width: 100%; /* اجعل الأزرار بعرض كامل */
+        padding: 10px;
+        font-size: 15px;
+    }
+}
+body{
+  background-color:#f6f6f6
+}
+main {
+    margin-top: 132px;
+}
+.button-row {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+    gap: 17px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="topbar">
+    <img src="/image/f9f831a3dca6f5fbcb89a69383cd9de01ac1e52b (1).png" class="logo" >
+<div class="center-section">
+  <div class="search-wrapper">
+    <input type="text" placeholder="ابحث في الصفحات…" class="search-box">
+    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+  </div>
+</div>
+
+    <div class="icons">
+       <label for="showNotifications" class="icon"><img src="/image/notification-2.svg" alt=""></label>
+
+<input type="checkbox" id="showNotifications" hidden>
+
+<div class="notifications-box">
+    <h3>الإشعارات</h3>
+
+    <div class="item">تم شحن الرصيد– منذ يومين</div>
+    <div class="item">تم شحن الرصيد– منذ ٣ أيام</div>
+    <div class="item">تم شحن الرصيد– منذ ٣ أيام</div>
+    <div class="item">تم شحن الرصيد– منذ ٣ أيام</div>
+
+    <a class="more">عرض الكل</a>
+</div>
+
+        <i class="icon">
+              <a href="متجر الثيمات.html" class="iconss ">
+        <img src="/image/icons/Outline/Computers, Devices, Electronics/game.svg" alt="">
+    </a>
+        </i>
+        <i class="icon">  <a href="app.html" class="iconss ">
+         <img src="/image/icons/Outline/setting/category.svg">
+
+    </a></i>
+    </a></i>
+     <i class="icon" id="theme-toggle" style="cursor: pointer;">
+    <img src="image/icons/Outline/Weather/moon.svg">
+</i>
+</i>
+    </div>
+<div class="store-wrapper">
+  <div class="store-select" id="storeBtn">
+    <img src="/image/121df8e4ff69af84b6cdf0af74303de3d79c0e0c.jpg">
+    <span class="flo">متجر زهور</span>
+    <i class="fa-solid fa-chevron-down arrow"></i> <!-- السهم -->
+  </div>
+
+  <div id="dropdownMenu" class="dropdown-menu">
+    <div class="profile-section">
+      <img src="/image/121df8e4ff69af84b6cdf0af74303de3d79c0e0c.jpg" class="profile-img" />
+      <div class="profile-info">
+        <h3>متجر زهور</h3>
+        <p>الباقة المجانية</p>
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button class="visit-btn">زيارة المتجر <i class="fa-solid fa-link" style="font-size: 14px; color: #888;"></i></button>
+      <a href="الاعدادات.html" class="settings-btn">الإعدادات ⚙️</a>
+    </div>
+
+    <ul class="menu-list">
+      <li><a href="باقه المتجر.html"><img src="/image/icons/Outline/Security,car,delivery,Crypto%20Currency,shop/shop.svg" alt=""> باقه المنتجات</a></li>
+      <li><a href="المحفظه.html" class="menu-link"><img src="/image/icons/Outline/Money/wallet-3.svg" alt="">المحفظة والفواتير</a></li>
+      <li class="logout"><i class="fa-solid fa-right-from-bracket"></i> تسجيل الخروج</li>
+    </ul>
+  </div>
+</div>
+
+
+</div>
+ <input type="checkbox" id="menuToggle" hidden>
+<label for="menuToggle" class="menu-btn">☰</label>
+
+
+<aside class="sidebar" id="sidebar">
+    <ul>
+
+        <li class="section-title">عام</li>
+
+        <li  >
+            <a href="home.html">
+                <span class="icon"><img src="/image/icons/Outline/Essetional/home-2.svg" alt=""></span> الرئيسية
+            </a>
+        </li>
+
+
+
+        <li class="has-submenu ">
+    <div class="menu-item">
+
+            <span class="icon"><img src="image/icons/Outline/Security,car,delivery,Crypto%20Currency,shop/shopping-cart.svg" alt=""></span> الطلبات
+
+        <span class="arrow"><i class="fa-solid fa-angle-down"></i></span>
+    </div>
+
+    <!-- القائمة اللي هتظهر -->
+    <ul class="submenu">
+               <li><a href="الطلبات.html">الطلبات</a></li>
+
+        <li><a href="قسائم.html">القسائم</a></li>
+    </ul>
+</li>
+
+
+       <li class="has-submenu">
+    <div class="menu-item">
+
+            <span class="icon"><img src="/image/icons/Outline/Security,car,delivery,Crypto%20Currency,shop/shop-add.svg" alt=""></span> المنتجات
+
+        <span class="arrow"><i class="fa-solid fa-angle-down"></i></span>
+    </div>
+
+    <!-- القائمة اللي هتظهر -->
+    <ul class="submenu">
+        <li><a href="المنتجات.html">المنتجات</a></li>
+        <li><a href=" القسائم.html">الأقسام</a></li>
+    </ul>
+</li>
+
+
+        <li>
+            <a href="العملاء.html">
+                <span class="icon"><img src="/image/icons/Outline/users/profile-2user.svg" alt=""></span> العملاء
+            </a>
+        </li>
+
+        <li>
+                       <a href="/التقارير.html">
+
+                <span class="icon"><img src="/image/icons/Outline/Business/chart-1.svg" alt=""></span> التقارير
+            </a>
+        </li>
+
+        <li >
+            <a href="التقيمات.html">
+                <span class="icon"><i class="fa-regular fa-star"></i></span> التقييمات
+            </a>
+        </li>
+
+        <li>
+            <a href="الصفحه التعريفيه.html">
+                <span class="icon"><img src="/image/icons/Outline/Archive,time/book-saved.svg" alt=""></span> الصفحات التعريفية
+            </a>
+        </li>
+
+        <li class="section-title">أدوات مساعدة</li>
+
+        <li class="active">
+            <a href="خدمات التاجر.html">
+                <span class="icon"><i class="fa-regular fa-clone"></i></span> خدمات التاجر
+            </a>
+        </li>
+
+        <li>
+            <a href="تفعيل الشحن.html">
+                <span class="icon"><img src="/image/icons/Outline/Security,car,delivery,Crypto%20Currency,shop/ship.svg" alt=""></span> تفعيل الشحن
+            </a>
+        </li>
+
+        <li>
+            <a href="خمات الذكاء الصناعي فعيل.html">
+                <span class="icon"><img src="/image/icons/Outline/content edit/task.svg" alt=""></span> خدمات الذكاء الاصطناعي
+            </a>
+        </li>
+
+        <li class="section-title">الموردين</li>
+
+        <li>
+            <a href="الموردين.html">
+                <span class="icon"><img src="/image/icons/Outline/Search,Astrology,Building/building.svg" alt=""></span> المستودعات السعودية
+            </a>
+        </li>
+
+        <li>
+            <a href="المنتجات الرقميه2.html">
+                <span class="icon"><img src="/image/icons/Outline/Computers, Devices, Electronics/monitor-mobbile.svg" alt=""></span> المنتجات الرقمية
+            </a>
+        </li>
+
+    </ul>
+</aside>
+
+
+
+
+    <!-- Main Page -->
+    <main class="content">
+      <!-- الهيدر الثاني -->
+<div class="services-tabs-bar">
+  <a href="#" class="services-tab-btn is-active">خدمات التاجر</a>
+    <a href="الخدمات المشتراه.html" class="services-tab-btn">الخدمات المشترة</a>
+
+    <a href="سجل المحادثات.html" class="services-tab-btn">سجل المحادثات</a>
+</div>
+
+
+
+    <div class="page-wrap">
+
+        <h2 class="section-titles">تجهيز وتأسيس المتجر</h2>
+<div class="search-sort-wrapper">
+  <div class="search-wrapper">
+  <input type="text" class="search-input" placeholder="ابحث باسم الخدمة...">
+  <img src="image/icons/Outline/Search,Astrology,Building/search-normal-1.svg" class="search-icon">
+</div>
+<style>
+  .search-wrapper {
+  position: relative;
+  width: 300px; /* طول المربع حسب الحاجة */
+}
+
+.search-wrapper .search-input {
+  width: 100%;
+  padding: 10px 35px 10px 10px; /* مساحة كافية للصورة على اليمين */
+  box-sizing: border-box;
+}
+
+.search-wrapper .search-icon {
+  position: absolute;
+  right: 10px; /* مسافة الأيقونة من طرف المربع */
+  top: 25%;
+  transform: translateY(-50%);
+  width: 20px; /* حجم الأيقونة */
+  pointer-events: none;
+}
+
+</style>
+  <div class="sort-box">
+    <div class="sort-btn" onclick="toggleSort()">ترتيب حسب ▼</div>
+    <ul class="sort-menu" id="sortMenu">
+        <li>الأحدث</li>
+        <li>الأعلى سعرًا</li>
+        <li>الأقل سعرًا</li>
+        <li>الأسرع تنفيذًا</li>
+    </ul>
+  </div>
+</div>
+
+
+        <div class="service-grid"> 
+
+     <div class="service-box">
+                <img src="image/fc439fb48411300df3a1bb1a668ddc2cde9cefb1.png" class="service-img">
+
+                <h3 class="service-title">إنشاء متجر إلكتروني متكامل</h3>
+                <p class="service-desc">
+                    إنشاء متجر إلكتروني كامل يشمل التصميم والربط والخدمات...
+                </p>
+
+                <div class="info-row">
+                    <span><i class="fa-solid fa-money-bill"></i> 180 <img class="rl" src="/image/Saudi_Riyal_Symbol.svg.png"></span>
+                    <span><img src="image/icons/Outline/Archive,time/clock.svg">  7 أيام</span>
+                </div>
+
+                <div class="button-row">
+                  <button class="details-btn" onclick="window.location.href='تفاصيل انشاء متجر الكتروني.html'">
+    التفاصيل
+</button>
+
+                 <a href="تفاصيل انشاء متجر الكتروني.html" class="order-btn">اطلب الآن</a>
+
+                </div>
+            </div>
+
+          
+           
+            <!-- كارت 2 -->
+            <div class="service-box">
+                <img src="image/e7cb2f51a6fd95bf325d62415525abc86921c02b.png" class="service-img">
+
+                <h3 class="service-title">إعداد هوية المتجر وتجربة المستخدم</h3>
+                <p class="service-desc">
+                    تصميم واجهة بصرية مميزة للمتجر تشمل الألوان والخطوط...
+                </p>
+
+                <div class="info-row">
+                    <span><i class="fa-solid fa-money-bill"></i> 120 <img class="rl" src="/image/Saudi_Riyal_Symbol.svg.png"></span>
+                    <span><img src="image/icons/Outline/Archive,time/clock.svg"> 7 أيام</span>
+                </div>
+
+                <div class="button-row">
+                    <button class="details-btn">التفاصيل</button>
+                    <button class="order-btn">اطلب الآن</button>
+                </div>
+            </div>
+
+            <!-- كارت 3 -->
+        <div class="service-box">
+                <img src="image/a81c93b870687ae5f55a18a63ea0363a0d676c6f.png" class="service-img">
+
+                <h3 class="service-title">رفع المنتجات وضبط الإعدادات</h3>
+                <p class="service-desc">
+                    تجهيز المتجر من حيث إضافة المنتجات والصور والبيانات...
+                </p>
+
+                <div class="info-row">
+                    <span><i class="fa-solid fa-money-bill"></i> 60 <img class="rl" src="/image/Saudi_Riyal_Symbol.svg.png"></span>
+                    <span><img src="image/icons/Outline/Archive,time/clock.svg">  3 أيام</span>
+                </div>
+
+                <div class="button-row">
+                    <button class="details-btn">التفاصيل</button>
+                    <button class="order-btn">اطلب الآن</button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+</main>
+
+</div>
+
+
+
+
+<script src="/assests/js/home.js"></script>
+<script src="/assests/js/drop.js"></script>
+<script>
+const themeToggle = document.getElementById('theme-toggle');
+let isDark = false;
+
+themeToggle.addEventListener('click', () => {
+    isDark = !isDark;
+
+    if (isDark) {
+       document.body.style.backgroundColor = '#f6f6f6';
+        document.documentElement.style.filter = 'invert(1) hue-rotate(180deg)';
+
+        // الصور والفيديوهات يجب عكسها مرة أخرى لكي لا تظهر ألوانها غريبة
+        const media = document.querySelectorAll('img, video, .profile-img, .logo');
+        media.forEach(item => item.style.filter = 'invert(1) hue-rotate(180deg)');
+
+        // تغيير شكل الأيقونة
+        themeToggle.querySelector('i').classList.replace('fa-moon', 'fa-sun');
+    } else {
+        // العودة للوضع الطبيعي
+        document.documentElement.style.filter = 'none';
+
+        const media = document.querySelectorAll('img, video, .profile-img, .logo');
+        media.forEach(item => item.style.filter = 'none');
+
+        // العودة لأيقونة القمر
+        themeToggle.querySelector('i').classList.replace('fa-sun', 'fa-moon');
+    }
+});
+  </script>
+</body>
+</html>

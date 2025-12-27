@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title> الموردين</title>
+    <link rel="stylesheet" href="/assests/style.css">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+
+.categories {
+
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 6px;
+    border-radius: 8px;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+    background-color: #eee;
+}
+body{
+  background-color:#f6f6f6
+}
+.cat {
+    padding: 8px 15px;
+    font-size: 13px;
+    color: #333333;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.2s;
+    text-align: center;
+
+}
+
+.cat.active {
+    background-color: #ffffff;
+    color: #000;
+
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.cat:hover:not(.active) {
+    background-color: #e5e7eb;
+}
+
+
+
+/* --- تنسيق شبكة المنتجات --- */
+.products-grid {
+    display: grid;
+    /* كروت متجاوبة: 3 في الصف للشاشات الكبيرة */
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px; /* مسافة بين الكروت */
+    padding: 10px 0;
+}
+
+/* --- تنسيق الكارت نفسه --- */
+.product-card {
+    background-color: #ffffff;
+    border: 1px solid #f3f4f6; /* إطار رمادي خفيف جداً */
+    border-radius: 12px; /* زوايا دائرية */
+    padding: 15px;
+    direction: ltr;
+    /* نظام الشبكة لترتيب المحتوى داخلياً */
+    display: grid;
+    /* في العربي (RTL): العمود 1 (يمين) للنص، العمود 2 (يسار) للصورة */
+    grid-template-columns: 1fr 100px;
+    grid-template-rows: min-content min-content min-content auto; /* صفوف تلقائية */
+    gap: 5px 15px; /* مسافة بين العناصر */
+    align-items: start; /* محاذاة للأعلى */
+
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+/* تأثير عند وقوف الماوس */
+.product-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+/* --- حل مشكلة الرابط في الكارت الأول --- */
+/* هذا يجعل الرابط يختفي هيكلياً لكي يعمل الـ Grid مع العناصر بداخله */
+.product-link {
+    display: contents;
+    color: inherit; /* الحفاظ على لون النصوص */
+    text-decoration: none; /* إزالة الخط */
+}
+
+/* --- تنسيق الصورة --- */
+.card-image img {
+    grid-column: 2;
+    grid-row: 1 / span 4;
+    width: 100%;
+    height: 90px;
+    object-fit: contain;
+    align-self: center;
+}
+
+
+/* --- تنسيق النصوص (تلقائياً ستكون في العمود الأيمن) --- */
+
+/* 1. العنوان */
+.p-title {
+    margin: 0;
+    font-size: 15px;
+    font-weight: bold;
+    color: #1f2937;
+    line-height: 1.4;
+}
+
+/* 2. التصنيف */
+.p-cat {
+    margin: 0;
+    font-size: 12px;
+    color: #9ca3af; /* لون رمادي فاتح */
+}
+
+/* 3. السعر */
+.p-price {
+    margin: 5px 0;
+    font-size: 16px;
+
+    color: #000;
+    direction: rtl;
+}
+
+/* 4. الوصف */
+.p-desc {
+    margin: 0;
+    font-size: 12px;
+    color: #6b7280;
+    line-height: 1.5;
+
+    /* إظهار سطرين فقط ثم ... */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.product-card .p-desc {
+    font-size: 14px;
+    color: #4D4D4D;
+    margin-right: -102px;
+}
+
+.pagination span {
+        display: inline-block;}
+
+
+
+
+</style>
+
+</head>
+
+<body>
+
+<div class="topbar">
+    <img src="/image/f9f831a3dca6f5fbcb89a69383cd9de01ac1e52b (1).png" class="logo" >
+<div class="center-section">
+  <div class="search-wrapper">
+    <input type="text" placeholder="ابحث في الصفحات…" class="search-box">
+    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+  </div>
+</div>
+
+    <div class="icons">
+       <label for="showNotifications" class="icon"><img src="/image/notification-2.svg" alt=""></label>
+
+<input type="checkbox" id="showNotifications" hidden>
+
+<div class="notifications-box">
+    <h3>الإشعارات</h3>
+
+    <div class="item">تم شحن الرصيد– منذ يومين</div>
+    <div class="item">تم شحن الرصيد– منذ ٣ أيام</div>
+    <div class="item">تم شحن الرصيد– منذ ٣ أيام</div>
+    <div class="item">تم شحن الرصيد– منذ ٣ أيام</div>
+
+    <a class="more">عرض الكل</a>
+</div>
+
+        <i class="icon">
+              <a href="متجر الثيمات.html" class="iconss ">
+        <img src="/image/icons/Outline/Computers, Devices, Electronics/game.svg" alt="">
+    </a>
+        </i>
+        <i class="icon">  <a href="app.html" class="iconss ">
+         <img src="/image/icons/Outline/setting/category.svg">
+
+    </a></i>
+    </a></i>
+     <i class="icon" id="theme-toggle" style="cursor: pointer;">
+    <img src="image/icons/Outline/Weather/moon.svg">
+</i>
+</i>
+    </div>
+<div class="store-wrapper">
+  <div class="store-select" id="storeBtn">
+    <img src="/image/121df8e4ff69af84b6cdf0af74303de3d79c0e0c.jpg">
+    <span class="flo">متجر زهور</span>
+    <i class="fa-solid fa-chevron-down arrow"></i> <!-- السهم -->
+  </div>
+
+  <div id="dropdownMenu" class="dropdown-menu">
+    <div class="profile-section">
+      <img src="/image/121df8e4ff69af84b6cdf0af74303de3d79c0e0c.jpg" class="profile-img" />
+      <div class="profile-info">
+        <h3>متجر زهور</h3>
+        <p>الباقة المجانية</p>
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button class="visit-btn">زيارة المتجر <i class="fa-solid fa-link" style="font-size: 14px; color: #888;"></i></button>
+      <a href="الاعدادات.html" class="settings-btn">الإعدادات ⚙️</a>
+    </div>
+
+    <ul class="menu-list">
+      <li><a href="باقه المتجر.html"><img src="/image/icons/Outline/Security,car,delivery,Crypto%20Currency,shop/shop.svg" alt=""> باقه المنتجات</a></li>
+      <li><a href="المحفظه.html" class="menu-link"><img src="/image/icons/Outline/Money/wallet-3.svg" alt="">المحفظة والفواتير</a></li>
+      <li class="logout"><i class="fa-solid fa-right-from-bracket"></i> تسجيل الخروج</li>
+    </ul>
+  </div>
+</div>
+
+
+</div>
+
+ <input type="checkbox" id="menuToggle" hidden>
+<label for="menuToggle" class="menu-btn">☰</label>
+
+<aside class="sidebar" id="sidebar">
+    <ul>
+
+        <li class="section-title">عام</li>
+
+        <li  >
+            <a href="home.html">
+                <span class="icon"><img src="/image/icons/Outline/Essetional/home-2.svg" alt=""></span> الرئيسية
+            </a>
+        </li>
+
+
+
+        <li class="has-submenu ">
+    <div class="menu-item">
+
+            <span class="icon"><img src="image/icons/Outline/Security,car,delivery,Crypto%20Currency,shop/shopping-cart.svg" alt=""></span> الطلبات
+
+        <span class="arrow"><i class="fa-solid fa-angle-down"></i></span>
+    </div>
+
+    <!-- القائمة اللي هتظهر -->
+    <ul class="submenu">
+               <li><a href="الطلبات.html">الطلبات</a></li>
+
+       <li><a href="قسائم.html">القسائم</a></li>
+    </ul>
+</li>
+
+
+       <li class="has-submenu">
+    <div class="menu-item">
+
+            <span class="icon"><img src="/image/icons/Outline/Security,car,delivery,Crypto%20Currency,shop/shop-add.svg" alt=""></span> المنتجات
+
+        <span class="arrow"><i class="fa-solid fa-angle-down"></i></span>
+    </div>
+
+    <!-- القائمة اللي هتظهر -->
+    <ul class="submenu">
+        <li><a href="المنتجات.html">المنتجات</a></li>
+        <li><a href=" القسائم.html">الأقسام</a></li>
+    </ul>
+</li>
+
+
+        <li>
+            <a href="العملاء.html">
+                <span class="icon"><img src="/image/icons/Outline/users/profile-2user.svg" alt=""></span> العملاء
+            </a>
+        </li>
+
+        <li>
+                       <a href="/التقارير.html">
+
+                <span class="icon"><img src="/image/icons/Outline/Business/chart-1.svg" alt=""></span> التقارير
+            </a>
+        </li>
+
+        <li >
+            <a href="التقيمات.html">
+                <span class="icon"><i class="fa-regular fa-star"></i></span> التقييمات
+            </a>
+        </li>
+
+        <li>
+            <a href="الصفحه التعريفيه.html">
+                <span class="icon"><img src="/image/icons/Outline/Archive,time/book-saved.svg" alt=""></span> الصفحات التعريفية
+            </a>
+        </li>
+
+        <li class="section-title">أدوات مساعدة</li>
+
+        <li>
+            <a href="خدمات التاجر.html">
+                <span class="icon"><i class="fa-regular fa-clone"></i></span> خدمات التاجر
+            </a>
+        </li>
+
+        <li>
+            <a href="تفعيل الشحن.html">
+                <span class="icon"><img src="/image/icons/Outline/Security,car,delivery,Crypto%20Currency,shop/ship.svg" alt=""></span> تفعيل الشحن
+            </a>
+        </li>
+
+        <li>
+            <a href="خمات الذكاء الصناعي فعيل.html">
+                <span class="icon"><img src="/image/icons/Outline/content edit/task.svg" alt=""></span> خدمات الذكاء الاصطناعي
+            </a>
+        </li>
+
+        <li class="section-title">الموردين</li>
+
+        <li class="active">
+            <a href="الموردين.html">
+                <span class="icon"><img src="/image/icons/Outline/Search,Astrology,Building/building.svg" alt=""></span> المستودعات السعودية
+            </a>
+        </li>
+
+        <li>
+            <a href="المنتجات الرقميه2.html">
+                <span class="icon"><img src="/image/icons/Outline/Computers, Devices, Electronics/monitor-mobbile.svg" alt=""></span> المنتجات الرقمية
+            </a>
+        </li>
+
+    </ul>
+</aside>
+
+
+
+
+
+
+
+
+
+<main class="content">
+
+    <h2 class="page-title">المستودعات السعودية</h2>
+    <p class="page-subtitle">منتجات جاهزة في المستودعات السعودية</p>
+
+    <div class="search-container">
+        <input type="text" class="product-search" placeholder="ابحث باسم المنتج...">
+        <span class="search-icon"><i class="fa fa-search"></i></span>
+    </div>
+
+    <div class="categories">
+        <div class="cat active">كل الأقسام (70)</div>
+        <div class="cat">جرابات جوالات (20)</div>
+        <div class="cat">اكسسوارات جوالات (10)</div>
+        <div class="cat">ساعات جوال (31)</div>
+        <div class="cat">شواحن جوال (10)</div>
+        <div class="cat">سماعات الجوالات (15)</div>
+        <div class="cat">حماية الجوال (6)</div>
+        <div class="cat">أخرى (20)</div>
+    </div>
+
+   <div class="products-grid">
+
+    <div class="product-card">
+       <a href="كل منتج.html" class="product-link">
+            <div class="card-details">
+                <h3 class="p-title">سماعات EchoBeat اللاسلكية</h3>
+                <p class="p-cat">إلكترونيات</p>
+             <p class="p-price">
+  18.900
+  <img src="/image/icons/Outline/Money/عملة.svg" alt="" class="currency-icon" style=" width: 18px;
+    height: 18px;
+    display: inline-block;">
+</p>
+
+
+            </div>
+            <div class="card-image">
+                <img src="image/0aecc65ea73bcfb386e2a50c65260539310a02a2.png" alt="سماعات">
+            </div>   <p class="p-desc">سماعات بلوتوث بجودة صوت نقية وعزل ضوضاء، مع بطارية تدوم حتى 20 ساعة.</p>
+        </a>
+    </div>
+
+    <div class="product-card">
+        <a href="#" class="product-link">
+            <div class="card-details">
+                <h3 class="p-title">Bloom Essence عطر</h3>
+                <p class="p-cat">العطور</p>
+                <p class="p-price">9  <img src="/image/icons/Outline/Money/عملة.svg" alt="" class="currency-icon" style=" width: 18px;
+    height: 18px;
+    display: inline-block;"></p>
+                <p class="p-desc">عطر بنفحات زهرية هادئة ولمسة فانيلا ناعمة، مناسب للاستخدام اليومي.</p>
+            </div>
+            <div class="card-image">
+                <img src="image/b6f094d33a3c68441e4f900fed492bac4b65a488.png" alt="عطر">
+            </div>
+        </a>
+    </div>
+
+    <div class="product-card">
+        <a href="#" class="product-link">
+            <div class="card-details">
+                <h3 class="p-title">حقيبة يد Elegance Leather</h3>
+                <p class="p-cat">الأزياء والإكسسوارات</p>
+                <p class="p-price">22.000  <img src="/image/icons/Outline/Money/عملة.svg" alt="" class="currency-icon" style=" width: 18px;
+    height: 18px;
+    display: inline-block;"></p>
+                <p class="p-desc">حقيبة جلدية فاخرة بتصميم كلاسيكي، مناسبة للعمل والمناسبات.</p>
+            </div>
+            <div class="card-image">
+                <img src="image/e4150fd578d171e17072ff47855900d32b38089e.png" alt="حقيبة">
+            </div>
+        </a>
+    </div>
+
+    <div class="product-card">
+        <div class="card-details">
+            <h3 class="p-title"> مكواة بخار SteamPro </h3>
+            <p class="p-cat">  الأجهزة المنزلية</p>
+            <p class="p-price">14.900  <img src="/image/icons/Outline/Money/عملة.svg" alt="" class="currency-icon" style=" width: 18px;
+    height: 18px;
+    display: inline-block;"></p>
+            <p class="p-desc">  مكواة بخار عالية الأداء، تسهّل فرد التجاعيد بسرعة وتمنح نتائج احترافية.</p>
+        </div>
+        <div class="card-image">
+            <img src="/image/a42523a972374416c61ce1ea0417618a627d7d42.png" alt="منظم">
+        </div>
+    </div>
+     <div class="product-card">
+        <div class="card-details">
+            <h3 class="p-title">DeepCare كريم ترطيب</h3>
+            <p class="p-cat">العناية بالبشرة</p>
+            <p class="p-price">4.200  <img src="/image/icons/Outline/Money/عملة.svg" alt="" class="currency-icon" style=" width: 18px;
+    height: 18px;
+    display: inline-block;"></p>
+            <p class="p-desc">كريم مرطب بتركيبة غنية لترطيب يدوم 24 ساعة، مناسب لجميع أنواع البشرة.</p>
+        </div>
+        <div class="card-image">
+            <img src="/image/b48f4356323662d69dbe4efe17399e1c8b5926dc.png" alt="كريم">
+        </div>
+    </div>
+
+     <div class="product-card">
+        <div class="card-details">
+            <h3 class="p-title"> DeskMate منظم مكتب </h3>
+            <p class="p-cat">القرطاسية ولوازم المكتب</p>
+            <p class="p-price">2.800  <img src="/image/icons/Outline/Money/عملة.svg" alt="" class="currency-icon" style=" width: 18px;
+    height: 18px;
+    display: inline-block;"></p>
+            <p class="p-desc">منظم متعدد الأقسام يساعدك على ترتيب أدوات المكتب بشكل أنيق.</p>
+        </div>
+        <div class="card-image">
+            <img src="/image/5c5fc34e4757515b950e85825855ae276e67dcae.png" alt="تيشيرت">
+        </div>
+    </div>
+      <div class="product-card">
+        <div class="card-details">
+            <h3 class="p-title">CottonFeel تيشيرت</h3>
+            <p class="p-cat">الأزياء</p>
+            <p class="p-price">5.300 ﷼</p>
+            <p class="p-desc">تيشيرت قطني ناعم بخامة مريحة ومناسبة للاستخدام اليومي.</p>
+        </div>
+        <div class="card-image">
+            <img src="/image/c752073c18ff70a33e5e6686e9028588987606ec.png" alt="تيشيرت">
+        </div>
+    </div>
+ <div class="product-card">
+        <div class="card-details">
+            <h3 class="p-title">SportyFlow زجاجة ماء</h3>
+            <p class="p-cat">الرياضة واللياقة</p>
+            <p class="p-price">3.200  <img src="/image/icons/Outline/Money/عملة.svg" alt="" class="currency-icon" style=" width: 18px;
+    height: 18px;
+    display: inline-block;"></p>
+            <p class="p-desc">زجاجة ماء خفيفة وعازلة للحرارة، مثالية للتمارين والأنشطة الخارجية.</p>
+        </div>
+        <div class="card-image">
+            <img src="/image/adf68104986db919d0c2218f1c33f08f0ff89e7c (1).png" alt="زجاجة">
+        </div>
+    </div>
+
+
+    <div class="product-card">
+        <div class="card-details">
+            <h3 class="p-title">SteamPro مكواة بخار</h3>
+            <p class="p-cat">الأجهزة المنزلية</p>
+            <p class="p-price">14.900  <img src="/image/icons/Outline/Money/عملة.svg" alt="" class="currency-icon" style=" width: 18px;
+    height: 18px;
+    display: inline-block;"></p>
+            <p class="p-desc">مكواة بخار عالية الأداء، تسهل فرد التجاعيد بسرعة وتمنح نتائج احترافية.</p>
+        </div>
+        <div class="card-image">
+            <img src="/image/a42523a972374416c61ce1ea0417618a627d7d42.png" alt="مكواة">
+        </div>
+    </div>
+
+
+
+
+
+
+
+</div>
+
+   <div class="pagination-wrapper">
+
+    <div class="pagination">
+        <span>&lt;</span>
+        <span class="active-page">1</span>
+        <span>2</span>
+        <span>3</span>
+        <span>&gt;</span>
+    </div>
+
+    <div class="page-count-text">
+        ١  من ١٣ صفحة
+    </div>
+
+</div>
+
+
+
+</div>
+
+</main>
+
+
+<script src="/assests/js/home.js"></script>
+<script src="/assests/js/drop.js"></script>
+<script>
+const themeToggle = document.getElementById('theme-toggle');
+let isDark = false;
+
+themeToggle.addEventListener('click', () => {
+    isDark = !isDark;
+
+    if (isDark) {
+       document.body.style.backgroundColor = '#f6f6f6';
+        document.documentElement.style.filter = 'invert(1) hue-rotate(180deg)';
+
+        // الصور والفيديوهات يجب عكسها مرة أخرى لكي لا تظهر ألوانها غريبة
+        const media = document.querySelectorAll('img, video, .profile-img, .logo');
+        media.forEach(item => item.style.filter = 'invert(1) hue-rotate(180deg)');
+
+        // تغيير شكل الأيقونة
+        themeToggle.querySelector('i').classList.replace('fa-moon', 'fa-sun');
+    } else {
+        // العودة للوضع الطبيعي
+        document.documentElement.style.filter = 'none';
+
+        const media = document.querySelectorAll('img, video, .profile-img, .logo');
+        media.forEach(item => item.style.filter = 'none');
+
+        // العودة لأيقونة القمر
+        themeToggle.querySelector('i').classList.replace('fa-sun', 'fa-moon');
+    }
+});
+  </script>
+</body>
+</html>

@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>الطلبات</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Rubik:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assests/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<style>
+  /* حاوية الفلتر */
+.filter-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: transparent; /* أو white حسب رغبتك */
+    padding: 10px 0;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+body{
+  background-color: #f6f6f6;
+}
+.filter-bar .search-box input {
+    width: 100% !important;
+    min-width: 100% !important;
+    max-width: 100%;
+    box-sizing: border-box;
+    text-align: right;
+    direction: rtl;
+    border: none;
+
+}
+.search-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 41px;
+}
+/* تجميع العناصر في اليمين */
+.right-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* تنسيق الأزرار وحقول الإدخال المشترك */
+.btn-outline, .date-input, .search-box input {
+    background-color: #fff;
+    border: 1px solid #e2e8f0; /* لون حدود رمادي فاتح */
+    border-radius: 8px; /* حواف دائرية */
+    padding: 8px 12px;
+    font-family: inherit;
+    font-size: 14px;
+    color: #4a5568;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    height: 40px; /* توحيد الارتفاع */
+    display: flex;
+    align-items: center;
+    gap: 8px; /* مسافة بين الأيقونة والنص */
+}
+
+/* تأثير عند المرور على الأزرار */
+.btn-outline:hover {
+    border-color: #cbd5e0;
+    background-color: #f7fafc;
+}
+
+/* تنسيق حقل التاريخ */
+.date-wrapper {
+    position: relative;
+}
+.date-input {
+    padding-left: 35px; /* مساحة للأيقونة */
+    width: 220px;
+}
+.input-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #a0aec0;
+    pointer-events: none;
+}
+
+/* تنسيق مربع البحث */
+.search-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.search-box input {
+    width: 250px;
+    padding-left: 35px; /* مساحة لأيقونة البحث */
+    border-radius: 8px;
+}
+.search-btn {
+    position: absolute;
+    left: 5px; /* لأن الموقع عربي */
+    background: none;
+    border: none;
+    color: #a0aec0;
+    cursor: pointer;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* === تنسيق القائمة المنسدلة الخاصة بالمنتج === */
+.dropdown-wrapper {
+    position: relative;
+}
+
+.dropdown-menu-filter {
+    display: none; /* مخفي افتراضياً */
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    list-style: none;
+    padding: 5px 0;
+    min-width: 150px;
+    z-index: 10;
+    margin-top: 5px;
+}
+
+.dropdown-menu-filter.show {
+    display: block; /* يظهر عند التفعيل */
+}
+
+.dropdown-menu-filter li a {
+    display: block;
+    padding: 8px 15px;
+    color: #4a5568;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.dropdown-menu-filter li a:hover {
+    background-color: #f7fafc;
+}
+/* الحاوية الخارجية (المسؤولة عن السكرول) */
+.table-box {
+    overflow-x: auto !important; /* إجبار السكرول */
+    width: 100%;
+}
+
+/* الجدول نفسه (المسؤول عن الحفاظ على العرض الكبير) */
+.orders-table {
+    min-width: 1000px; /* عرض كبير لإجبار السكرول على الظهور */
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* =========================================================
+   أكواد التجاوب (Responsive) - لجعل الشكل مثل الصورة
+   ========================================================= */
+
+/* 1. إعدادات الموبايل والتابلت (أقل من 992px) */
+@media (max-width: 992px) {
+
+    /* --- ترتيب الفلاتر (البحث والتاريخ) فوق بعض --- */
+    .filter-bar {
+        flex-direction: column-reverse; /* يعكس الترتيب: البحث فوق، والأزرار تحت */
+        align-items: stretch; /* تمدد العناصر لآخر العرض */
+        gap: 15px;
+    }
+
+    .right-controls {
+        flex-direction: column; /* الأزرار (تصدير، منتج، تاريخ) فوق بعض */
+        width: 100%;
+        gap: 10px;
+    }
+
+    .left-search {
+        width: 100%;
+    }
+
+    /* --- جعل الحقول والأزرار تأخذ عرض الشاشة بالكامل (مثل الصورة) --- */
+    .search-box, .search-box input,
+    .btn-outline,
+    .date-wrapper, .date-input,
+    .dropdown-wrapper, .dropdown-wrapper button {
+        width: 100% !important; /* إجبار العرض الكامل */
+        justify-content: center; /* توسيط الكلام داخل الزر */
+        height: 45px; /* تكبير الارتفاع قليلاً للمس */
+    }
+
+    /* --- تنسيق العنوان وزر "طلب جديد" --- */
+    .title-wrapper {
+        flex-direction: column; /* العنوان فوق والزر تحت */
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .new-order-btn {
+        width: 100%; /* الزر الأحمر بعرض الشاشة */
+        padding: 12px;
+        margin-top: 5px;
+    }
+}
+
+/* 2. شريط الحالات (Status Filter) - سحب أفقي */
+@media (max-width: 768px) {
+    .status-filter {
+        display: flex;
+        overflow-x: auto; /* يسمح بالسحب يمين ويسار */
+        white-space: nowrap; /* يمنع نزول العناصر لسطر جديد */
+        padding-bottom: 10px;
+        gap: 10px;
+        -webkit-overflow-scrolling: touch; /* نعومة اللمس */
+    }
+
+    /* إخفاء شريط التمرير للشكل الجمالي */
+    .status-filter::-webkit-scrollbar {
+        height: 0;
+        width: 0;
+    }
+}
+
+/* 3. إصلاح الجدول (Table) - سحب أفقي */
+.table-box {
+    display: block;
+    width: 100%;
+    overflow-x: auto; /* سكرول للجدول */
+    -webkit-overflow-scrolling: touch;
+    margin-top: 15px;
+    padding-bottom: 10px;
+}
+
+.orders-table {
+    min-width: 950px; /* عرض ثابت كبير للحفاظ على شكل الجدول */
+}
+
+/* =========================================
+   إخفاء أعمدة معينة في الموبايل
+   ========================================= */
+@media (max-width: 600px) {
+    .hide-mobile {
+        display: none !important;
+    }
+}
+/* =========================================
+   أكواد التجاوب (Media Queries) - أضف هذا الجزء
+   ========================================= */
+
+/* 1. تنسيق الموبايل والتابلت (أقل من 992px) */
+@media (max-width: 992px) {
+    /* ترتيب الفلاتر عمودياً */
+    .filter-bar {
+        flex-direction: column-reverse;
+        align-items: stretch;
+        gap: 15px;
+    }
+
+    .right-controls {
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+    }
+
+    .left-search { width: 100%; }
+
+    /* جعل الحقول والأزرار بعرض كامل */
+    .search-box, .search-box input,
+    .btn-outline,
+    .date-wrapper, .date-input,
+    .dropdown-wrapper, .dropdown-wrapper button {
+        width: 100% !important;
+        justify-content: center;
+        height: 45px;
+    }
+
+    /* تنسيق العنوان */
+    .title-wrapper {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    .new-order-btn {
+        width: 100%;
+        padding: 12px;
+        margin-top: 5px;
+    }
+}
+
+/* 2. تحسينات للموبايل الصغير (أقل من 768px) */
+@media (max-width: 768px) {
+    /* شريط الحالات قابل للسحب */
+    .status-filter {
+        display: flex;
+        overflow-x: auto;
+        white-space: nowrap;
+        padding-bottom: 10px;
+        gap: 10px;
+    }
+
+    /* إخفاء الأعمدة المحددة */
+    .hide-mobile {
+        display: none !important;
+    }
+}
+/* =================================================
+   بداية كود التجاوب (Responsive) - ضعه في نهاية الـ style
+   ================================================= */
+
+/* إعدادات الشاشات الصغيرة (موبايل) */
+@media (max-width: 768px) {
+
+    /* 1. تفعيل إخفاء الأعمدة (هذا هو الجزء الناقص عندك) */
+    .hide-mobile {
+        display: none !important;
+    }
+
+    /* 2. جعل الجدول قابل للسحب يميناً ويساراً */
+    .table-box {
+        display: block;
+        width: 100%;
+        overflow-x: auto; /* سكرول */
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* 3. ترتيب الفلاتر والبحث فوق بعضها لعدم تصغير الصفحة */
+    .filter-bar {
+        flex-direction: column-reverse; /* البحث فوق */
+        gap: 15px;
+    }
+
+    /* 4. جعل جميع الأزرار والحقول بعرض الشاشة */
+    .right-controls,
+    .left-search,
+    .search-box,
+    .search-box input,
+    .btn-outline,
+    .date-wrapper,
+    .date-input {
+        width: 100% !important;
+        justify-content: center; /* توسيط النص */
+    }
+
+    .right-controls {
+        flex-direction: column; /* الأزرار تحت بعض */
+    }
+
+    /* 5. تنسيق العنوان وزر "طلب جديد" */
+    .title-wrapper {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .new-order-btn {
+        width: 100%;
+        margin-top: 10px;
+    }
+}
+
+/* =========================================
+   إخفاء الأعمدة في الموبايل وتنسيق الجدول
+   ========================================= */
+@media (max-width: 600px) {
+    /* إخفاء العناصر التي تحمل هذا الكلاس */
+    .hide-mobile {
+        display: none !important;
+    }
+
+    /* تصغير المسافات والخط قليلاً في الموبايل ليصبح الجدول أنيقاً */
+    .orders-table th, .orders-table td {
+        padding: 10px 8px;
+        font-size: 12px;
+    }
+}
+.boxe{
+  background-color: white;
+}
+/* ==========================================================
+   إعدادات الشاشات المتوسطة والصغيرة (تاربلت وموبايل)
+   (أقل من 992 بيكسل)
+   ========================================================== */
+@media (max-width: 992px) {
+    
+    /* 1. القائمة الجانبية (Sidebar) */
+    .sidebar {
+        transform: translateX(100%); /* إخراج القائمة خارج الشاشة يميناً */
+        transition: transform 0.3s ease; /* نعومة الحركة عند الفتح */
+        z-index: 10000; /* ضمان ظهورها فوق كل العناصر */
+    }
+
+    /* إظهار زر القائمة (الهمبرغر) الذي كان مخفياً */
+    .menu-btn {
+        display: block !important;
+    }
+
+    /* عند الضغط على الزر (تفعيل الـ Checkbox) تعود القائمة للظهور */
+    #menuToggle:checked ~ .sidebar {
+        transform: translateX(0); /* إعادة القائمة لمكانها الطبيعي */
+        box-shadow: -5px 0 15px rgba(0,0,0,0.2); /* ظل لتمييزها */
+    }
+
+    /* خلفية سوداء شفافة تغطي المحتوى عند فتح القائمة */
+    #menuToggle:checked ~ .content::before {
+        content: '';
+        position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(0,0,0,0.5);
+        z-index: 9000;
+    }
+
+    /* 2. المحتوى الرئيسي والشريط العلوي */
+    .content {
+        margin-right: 0 !important; /* إلغاء الهامش الأيمن لأن القائمة اختفت */
+        padding-top: 80px;
+    }
+    
+    .topbar {
+        padding-right: 20px !important; /* إلغاء الفراغ المخصص للقائمة في الشريط العلوي */
+    }
+    
+    /* إخفاء شريط البحث العلوي الكبير في الموبايل لتوفير مساحة */
+    .center-section, .search-wrapper {
+        display: none !important; 
+    }
+
+    /* 3. شريط الفلاتر والأزرار (Filter Bar) */
+    .filter-bar {
+        flex-direction: column-reverse; /* عكس الترتيب: البحث فوق، والأزرار تحت */
+        align-items: stretch; /* جعل العناصر تمتد لتملأ العرض */
+        gap: 15px;
+    }
+
+    .right-controls {
+        flex-direction: column; /* جعل الأزرار (تصدير، تاريخ..) تحت بعضها */
+        width: 100%;
+        gap: 10px;
+    }
+
+    /* جعل جميع الأزرار وحقول الإدخال بعرض الشاشة الكامل لسهولة اللمس */
+    .btn-outline, 
+    .date-wrapper, 
+    .date-input, 
+    .dropdown-wrapper,
+    .dropdown-wrapper button,
+    .left-search .boxe {
+        width: 100% !important;
+        justify-content: center; /* توسيط الكلام داخل الأزرار */
+        box-sizing: border-box;
+    }
+    
+    .date-input {
+        text-align: center; /* توسيط التاريخ */
+        padding-right: 10px;
+    }
+}
+
+/* ==========================================================
+   إعدادات الشاشات الصغيرة جداً (الموبايل)
+   (أقل من 600 بيكسل)
+   ========================================================== */
+@media (max-width: 600px) {
+    
+    /* 4. الجدول (Table) - أهم جزء */
+    .table-box {
+        display: block;
+        width: 100%;
+        overflow-x: auto; /* تفعيل السكرول الأفقي */
+        -webkit-overflow-scrolling: touch; /* نعومة السكرول في الآيفون */
+        padding-bottom: 15px;
+    }
+
+    .orders-table {
+        min-width: 900px; /* إجبار الجدول على الاحتفاظ بعرض كبير ليظهر السكرول */
+    }
+
+    /* إخفاء الأعمدة غير المهمة (التي تحمل كلاس hide-mobile) */
+    .hide-mobile {
+        display: none !important;
+    }
+
+    /* 5. تنسيق العنوان والزر العلوي */
+    .title-wrapper {
+        flex-direction: column; /* العنوان فوق والزر تحت */
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .new-order-btn {
+        width: 100%; /* زر "طلب جديد" بعرض الشاشة */
+        text-align: center;
+    }
+    
+    /* شريط الحالات (تم الدفع، ملغي..) قابل للسحب يمين ويسار */
+    .status-filter {
+        display: flex;
+        overflow-x: auto;
+        white-space: nowrap;
+        padding-bottom: 10px;
+        gap: 10px;
+    }
+}
+
+</style>
+
+
+</head>
+
+<body>
+
+<div class="topbar">
+    <img src="/image/f9f831a3dca6f5fbcb89a69383cd9de01ac1e52b (1).png" class="logo" >
+<div class="center-section">
+  <div class="search-wrapper">
+    <input type="text" placeholder="ابحث في الصفحات…" class="search-box">
+    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+  </div>
+</div>
+
+    <div class="icons">
+       <label for="showNotifications" class="icon"><img src="/image/notification-2.svg" alt=""></label>
+
+<input type="checkbox" id="showNotifications" hidden>
+
+<div class="notifications-box">
+    <h3>الإشعارات</h3>
+
+    <div class="item">تم شحن الرصيد– منذ يومين</div>
+    <div class="item">تم شحن الرصيد– منذ ٣ أيام</div>
+    <div class="item">تم شحن الرصيد– منذ ٣ أيام</div>
+    <div class="item">تم شحن الرصيد– منذ ٣ أيام</div>
+
+    <a class="more">عرض الكل</a>
+</div>
+
+        <i class="icon">
+              <a href="متجر الثيمات.html" class="iconss ">
+        <img src="/image/icons/Outline/Computers, Devices, Electronics/game.svg" alt="">
+    </a>
+        </i>
+        <i class="icon">  <a href="app.html" class="iconss ">
+         <img src="/image/icons/Outline/setting/category.svg">
+
+    </a></i>
+    </a></i>
+     <i class="icon" id="theme-toggle" style="cursor: pointer;">
+    <img src="image/icons/Outline/Weather/moon.svg">
+</i>
+</i>
+    </div>
+<div class="store-wrapper">
+  <div class="store-select" id="storeBtn">
+    <img src="/image/121df8e4ff69af84b6cdf0af74303de3d79c0e0c.jpg">
+    <span class="flo">متجر زهور</span>
+    <i class="fa-solid fa-chevron-down arrow"></i> <!-- السهم -->
+  </div>
+
+  <div id="dropdownMenu" class="dropdown-menu">
+    <div class="profile-section">
+      <img src="/image/121df8e4ff69af84b6cdf0af74303de3d79c0e0c.jpg" class="profile-img" />
+      <div class="profile-info">
+        <h3>متجر زهور</h3>
+        <p>الباقة المجانية</p>
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button class="visit-btn">زيارة المتجر <i class="fa-solid fa-link" style="font-size: 14px; color: #888;"></i></button>
+      <a href="الاعدادات.html" class="settings-btn">الإعدادات ⚙️</a>
+    </div>
+
+    <ul class="menu-list">
+      <li><a href="باقه المتجر.html"><img src="/image/icons/Outline/Security,car,delivery,Crypto%20Currency,shop/shop.svg" alt=""> باقه المنتجات</a></li>
+      <li><a href="المحفظه.html" class="menu-link"><img src="/image/icons/Outline/Money/wallet-3.svg" alt="">المحفظة والفواتير</a></li>
+      <li class="logout"><i class="fa-solid fa-right-from-bracket"></i> تسجيل الخروج</li>
+    </ul>
+  </div>
+</div>
+
+
+</div>
+ <input type="checkbox" id="menuToggle" hidden>
+<label for="menuToggle" class="menu-btn">☰</label>
+
+<aside class="sidebar" id="sidebar">
+    <ul>
+
+        <li class="section-title">عام</li>
+
+        <li  class="active" >
+            <a href="home.html">
+                <span class="icon"><img src="/image/icons/Outline/Essetional/home-2.svg" alt=""></span> الرئيسية
+            </a>
+        </li>
+
+
+
+        <li class="has-submenu ">
+    <div class="menu-item">
+
+            <span class="icon"><img src="image/icons/Outline/Security,car,delivery,Crypto%20Currency,shop/shopping-cart.svg" alt=""></span> الطلبات
+
+        <span class="arrow"><i class="fa-solid fa-angle-down"></i></span>
+    </div>
+
+    <!-- القائمة اللي هتظهر -->
+    <ul class="submenu">
+               <li  class="active" ><a href="الطلبات.html">الطلبات</a></li>
+
+       <li><a href="قسائم.html">القسائم</a></li>
+    </ul>
+</li>
+
+
+       <li class="has-submenu">
+    <div class="menu-item">
+
+            <span class="icon"><img src="/image/icons/Outline/Security,car,delivery,Crypto%20Currency,shop/shop-add.svg" alt=""></span> المنتجات
+
+        <span class="arrow"><i class="fa-solid fa-angle-down"></i></span>
+    </div>
+
+    <!-- القائمة اللي هتظهر -->
+    <ul class="submenu">
+        <li><a href="المنتجات.html">المنتجات</a></li>
+        <li><a href=" القسائم.html">الأقسام</a></li>
+    </ul>
+</li>
+
+
+        <li>
+            <a href="العملاء.html">
+                <span class="icon"><img src="/image/icons/Outline/users/profile-2user.svg" alt=""></span> العملاء
+            </a>
+        </li>
+
+        <li>
+                       <a href="/التقارير.html">
+
+                <span class="icon"><img src="/image/icons/Outline/Business/chart-1.svg" alt=""></span> التقارير
+            </a>
+        </li>
+
+        <li >
+            <a href="التقيمات.html">
+                <span class="icon"><i class="fa-regular fa-star"></i></span> التقييمات
+            </a>
+        </li>
+
+        <li>
+            <a href="الصفحه التعريفيه.html">
+                <span class="icon"><img src="/image/icons/Outline/Archive,time/book-saved.svg" alt=""></span> الصفحات التعريفية
+            </a>
+        </li>
+
+        <li class="section-title">أدوات مساعدة</li>
+
+        <li>
+            <a href="خدمات التاجر.html">
+                <span class="icon"><i class="fa-regular fa-clone"></i></span> خدمات التاجر
+            </a>
+        </li>
+
+        <li>
+            <a href="تفعيل الشحن.html">
+                <span class="icon"><img src="/image/icons/Outline/Security,car,delivery,Crypto%20Currency,shop/ship.svg" alt=""></span> تفعيل الشحن
+            </a>
+        </li>
+
+        <li>
+            <a href="خمات الذكاء الصناعي فعيل.html">
+                <span class="icon"><img src="/image/icons/Outline/content edit/task.svg" alt=""></span> خدمات الذكاء الاصطناعي
+            </a>
+        </li>
+
+        <li class="section-title">الموردين</li>
+
+        <li>
+            <a href="الموردين.html">
+                <span class="icon"><img src="/image/icons/Outline/Search,Astrology,Building/building.svg" alt=""></span> المستودعات السعودية
+            </a>
+        </li>
+
+        <li>
+            <a href="المنتجات الرقميه2.html">
+                <span class="icon"><img src="/image/icons/Outline/Computers, Devices, Electronics/monitor-mobbile.svg" alt=""></span> المنتجات الرقمية
+            </a>
+        </li>
+
+    </ul>
+</aside>
+
+
+<!-- =============== MAIN CONTENT =============== -->
+<main class="content">
+
+    <div class="title-wrapper">
+        <h2 class="title">الطلبات <p class="sm">تابع طلبات متجرك</p></h2>
+        <button class="new-order-btn">+ طلب جديد</button>
+    </div>
+<div class="bg">
+    <!-- Filters -->
+  <div class="filter-bar">
+    <div class="right-controls">
+
+        <button class="btn-outline">
+          <img src="/image/icons/Outline/content%20edit/document-download.svg" alt=""> تصدير
+        </button>
+
+        <div class="dropdown-wrapper">
+            <button class="btn-outline dropdown-toggle" id="productFilterBtn">
+                المنتج <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <ul class="dropdown-menu-filter" id="productFilterMenu">
+                <li><a href="#">ساعات</a></li>
+                <li><a href="#">إلكترونيات</a></li>
+                <li><a href="#">ملابس</a></li>
+            </ul>
+        </div>
+<div class="date-wrapper">
+  <input id="dateRange" type="text" class="date-input" placeholder="من - إلى">
+  <img src="/image/icons/Outline/Archive,time/calendar-1.svg" alt="" class="date-icon">
+</div>
+<style>
+  .date-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.date-input {
+  padding-right: 35px; /* مساحة للصورة داخل المربع */
+  height: 40px;
+  font-size: 14px;
+}
+
+.date-icon {
+  position: absolute;
+  right: 10px; /* تبقى داخل المربع ناحية اليمين */
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  pointer-events: none; /* عشان ما تمنعش الكتابة داخل المربع */
+}
+
+</style>
+
+    </div>
+
+    <div class="left-search">
+        <div class="search-box boxe">
+            <input type="text" placeholder="ابحث باسم المنتج...">
+            <button class="search-btn"></button>
+            <img src="image/icons/Outline/Search,Astrology,Building/search-normal-1.svg">
+        </div>
+    </div>
+</div>
+</div>
+<div class="status-filter">
+  <span class="item active">كل الطلبات (36) ●</span>
+  <span class="item green">تم الدفع (30) ●</span>
+  <span class="item orange">بانتظار الدفع (3) ●</span>
+  <span class="item brown">تم الشحن (10) ●</span>
+  <span class="item purple">تم التوصيل (10) ●</span>
+  <span class="item blue">مُسترجعة(2) ●</span>
+  <span class="item red">ملغية(1) ●</span>
+</div>
+
+
+    <!-- Table -->
+    <div class="table-box">
+       <table class="orders-table" >
+   <thead>
+  <tr>
+       <th>إجراء</th>
+                <th>حالة الطلب</th>
+                <th>حالة الدفع</th>
+                <th>المبلغ</th>
+                <th class="hide-mobile">الدفع</th>
+                <th class="hide-mobile">التاريخ</th>
+                <th>العميل</th>
+                <th>اسم المنتج</th>
+                <th>رقم الطلب</th>
+                <th></th>
+</tr>
+</thead>
+
+<tbody>
+                <tr>
+                    <td><img src="/image/icons/Outline/setting/more.svg" alt=""></td>
+                    <td><span class="status delivered">تم التوصيل</span></td>
+                    <td><span class="status paid">تم الدفع</span></td>
+                    <td>299.00 ﷼</td>
+                    <td class="hide-mobile">ماستركارد</td>
+                    <td class="hide-mobile">29\10\2025</td>
+                    <td>أحمد خليل</td>
+                    <td class="product">
+                        <a href="كل طلب.html" class="product-link">
+                            ساعة ذكية برو إكس<br>
+                            <small>منتج 2</small>
+                        </a>
+                    </td>
+                    <td>#10248</td>
+                    <td><input type="checkbox"></td>
+                </tr>
+
+                <tr>
+                    <td><img src="/image/icons/Outline/setting/more.svg" alt=""></td>
+                    <td><span class="status processing">قيد التنفيذ</span></td>
+                    <td><span class="status pending">معلق</span></td>
+                    <td>299.00 ﷼</td>
+                    <td class="hide-mobile">فيزا</td>
+                    <td class="hide-mobile">29\10\2025</td>
+                    <td>عرفات حسين</td>
+                    <td class="product">
+                        كرسي مكتب فاخر<br>
+                        <small>منتج 1</small>
+                    </td>
+                    <td>#10246</td>
+                    <td><input type="checkbox"></td>
+                </tr>
+
+                <tr>
+                    <td><img src="/image/icons/Outline/setting/more.svg" alt=""></td>
+                    <td><span class="status delivered">تم التوصيل</span></td>
+                    <td><span class="status paid">تم الدفع</span></td>
+                    <td>299.00 ﷼</td>
+                    <td class="hide-mobile">باي بال</td>
+                    <td class="hide-mobile">29\10\2025</td>
+                    <td>نصرت جهان</td>
+                    <td class="product">
+                        حامل لابتوب مريح<br>
+                        <small>منتج 1</small>
+                    </td>
+                    <td>#10247</td>
+                    <td><input type="checkbox"></td>
+                </tr>
+
+                <tr>
+                    <td><img src="/image/icons/Outline/setting/more.svg" alt=""></td>
+                    <td><span class="status canceled">ملغي</span></td>
+                    <td><span class="status notpaid">غير مدفوع</span></td>
+                    <td>299.00 ﷼</td>
+                    <td class="hide-mobile">ماستركارد</td>
+                    <td class="hide-mobile">29\10\2025</td>
+                    <td>تاتيا أكثر</td>
+                    <td class="product">
+                        سماعات أذن لاسلكية ماكس<br>
+                        <small>منتج 2</small>
+                    </td>
+                    <td>#10245</td>
+                    <td><input type="checkbox"></td>
+                </tr>
+
+                <tr>
+                    <td><img src="/image/icons/Outline/setting/more.svg" alt=""></td>
+                    <td><span class="status processing">قيد التنفيذ</span></td>
+                    <td><span class="status pending">معلق</span></td>
+                    <td>299.00 ﷼</td>
+                    <td class="hide-mobile">فيزا</td>
+                    <td class="hide-mobile">29\10\2025</td>
+                    <td>عرفات حسين</td>
+                    <td class="product">
+                        كرسي مكتب فاخر<br>
+                        <small>منتج 1</small>
+                    </td>
+                    <td>#10246</td>
+                    <td><input type="checkbox"></td>
+                </tr>
+
+                <tr>
+                    <td><img src="/image/icons/Outline/setting/more.svg" alt=""></td>
+                    <td><span class="status delivered">تم التوصيل</span></td>
+                    <td><span class="status paid">تم الدفع</span></td>
+                    <td>299.00 ﷼</td>
+                    <td class="hide-mobile">باي بال</td>
+                    <td class="hide-mobile">29\10\2025</td>
+                    <td>نصرت جهان</td>
+                    <td class="product">
+                        حامل لابتوب مريح<br>
+                        <small>منتج 1</small>
+                    </td>
+                    <td>#10247</td>
+                    <td><input type="checkbox"></td>
+                </tr>
+
+                <tr>
+                    <td><img src="/image/icons/Outline/setting/more.svg" alt=""></td>
+                    <td><span class="status canceled">ملغي</span></td>
+                    <td><span class="status notpaid">غير مدفوع</span></td>
+                    <td>299.00 ﷼</td>
+                    <td class="hide-mobile">ماستركارد</td>
+                    <td class="hide-mobile">29\10\2025</td>
+                    <td>تاتيا أكثر</td>
+                    <td class="product">
+                        سماعات أذن لاسلكية ماكس<br>
+                        <small>منتج 2</small>
+                    </td>
+                    <td>#10245</td>
+                    <td><input type="checkbox"></td>
+                </tr>
+            </tbody>
+        </table>
+</table>
+
+    </div>
+
+</main>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+
+  flatpickr("#dateRange", {
+    mode: "range",
+    dateFormat: "m/d/Y",
+    locale: "ar",
+    showMonths: 2,
+    static: true,
+
+
+    onReady: function(selectedDates, dateStr, instance) {
+      const container = instance.calendarContainer;
+
+
+      const footer = document.createElement("div");
+      footer.style.cssText = "display: flex; justify-content: space-between; padding: 10px; border-top: 1px solid #eee; direction: rtl;";
+
+      footer.innerHTML = `
+        <button id="apply-btn" style="background: #b32121; color: white; border: none; padding: 8px 25px; border-radius: 5px; cursor: pointer; font-family: inherit;">تطبيق</button>
+        <button id="cancel-btn" style="background: white; border: 1px solid #ddd; padding: 8px 25px; border-radius: 5px; cursor: pointer; font-family: inherit;">إلغاء</button>
+      `;
+
+      container.appendChild(footer);
+
+
+      footer.querySelector("#apply-btn").addEventListener("click", () => instance.close());
+
+      footer.querySelector("#cancel-btn").addEventListener("click", () => {
+        instance.clear();
+        instance.close();
+      });
+    },
+
+    onClose: function(selectedDates, dateStr, instance) {
+      if (selectedDates.length === 2) {
+        console.log("من:", selectedDates[0]);
+        console.log("إلى:", selectedDates[1]);
+      }
+    }
+  });
+
+  // كود المنتج الخاص بكِ (يبقى كما هو بدون تغيير)
+  const productBtn = document.getElementById("productFilterBtn");
+  const productMenu = document.getElementById("productFilterMenu");
+
+  if (productBtn && productMenu) {
+    productBtn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      productMenu.classList.toggle("show");
+    });
+    document.addEventListener("click", function (e) {
+      if (!productBtn.contains(e.target) && !productMenu.contains(e.target)) {
+        productMenu.classList.remove("show");
+      }
+    });
+  }
+});
+</script>
+<script src="/assests/js/الطلبات.js">
+</script>
+<script src="/assests/js/home.js"></script>
+<script src="/assests/js/drop.js"></script>
+<script>
+const themeToggle = document.getElementById('theme-toggle');
+let isDark = false;
+
+themeToggle.addEventListener('click', () => {
+    isDark = !isDark;
+
+    if (isDark) {
+       document.body.style.backgroundColor = '#f6f6f6';
+        document.documentElement.style.filter = 'invert(1) hue-rotate(180deg)';
+
+        // الصور والفيديوهات يجب عكسها مرة أخرى لكي لا تظهر ألوانها غريبة
+        const media = document.querySelectorAll('img, video, .profile-img, .logo');
+        media.forEach(item => item.style.filter = 'invert(1) hue-rotate(180deg)');
+
+        // تغيير شكل الأيقونة
+        themeToggle.querySelector('i').classList.replace('fa-moon', 'fa-sun');
+    } else {
+        // العودة للوضع الطبيعي
+        document.documentElement.style.filter = 'none';
+
+        const media = document.querySelectorAll('img, video, .profile-img, .logo');
+        media.forEach(item => item.style.filter = 'none');
+
+        // العودة لأيقونة القمر
+        themeToggle.querySelector('i').classList.replace('fa-sun', 'fa-moon');
+    }
+});
+  </script>
+</body>
+</html>
