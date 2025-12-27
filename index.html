@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>صفحةانشاء الحساب - Dropship.sa</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Rubik:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="/assests/style.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+body{
+  background-color: #F9F9F9;
+}
+@media (max-width: 991.98px) {
+
+    .frames {
+        flex-direction: column;
+    }
+
+
+    .colleft {
+        display: none;
+    }
+
+
+    .colright {
+        width: 100%;
+
+        justify-content: flex-start;
+    }
+
+    .brands {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+
+    .titl {
+        display: block;
+        font-size: 1.5rem;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 8px;
+    }
+
+    .subtitl {
+        display: block;
+        font-size: 0.9rem;
+        text-align: center;
+        margin-bottom: 20px;
+        color: #666;
+    }
+
+
+
+
+    .form-control.ms-2 {
+        margin-left: 0 !important;
+        margin-right: 8px !important;
+    }
+
+
+    .form-check-label {
+        font-size: 0.85rem;
+    }
+
+    .form-check-input {
+
+        margin-right: 0 !important;
+        margin-left: 0.5rem;
+    }
+.form-select w-auto{
+        direction: ltr;
+    margin-left: -4px;}
+
+  .mb-1{
+    font-weight: 400;
+  }
+}
+
+@media (max-width: 465px) {
+  .nn{
+    display: none;
+  }
+
+}
+.blue{
+color:#007bff;
+}
+.phone-wrapper {
+  display: flex;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+/* رقم الهاتف */
+.phone-input {
+  flex: 1;
+  border: none;
+  padding: 12px;
+  outline: none;
+}
+
+/* مفتاح الدولة */
+.country-code {
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+
+  border-right: 1px solid #ccc; /* فاصل من ناحية الرقم */
+}
+
+.flag-img {
+  width: 20px;
+  height: 14px;
+  margin-left: 6px;
+  object-fit: cover;
+}
+
+.country-select {
+  border: none;
+
+  outline: none;
+  font-size: 14px;
+  cursor: pointer;
+}
+/* أي input بأيقونة */
+.input-box {
+  position: relative;
+}
+
+.formcontrol {
+  width: 100%;
+  padding: 12px 40px 12px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+/* الأيقونة */
+.icon {
+  position: absolute;
+  right: 12px; /* بداية الحقل RTL */
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+  pointer-events: none;
+}
+
+/* حقل الهاتف */
+.phone-wrapper {
+  display: flex;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.phone-input {
+  flex: 1;
+  border: none;
+  padding: 12px 12px 12px 40px;
+  outline: none;
+      text-align: center
+}
+
+/* مفتاح الدولة */
+.country-code {
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  background: #f7f7f7;
+  border-right: 1px solid #ccc;
+}
+
+.flag-img {
+  width: 20px;
+  height: 14px;
+  margin-left: 6px;
+}
+
+.country-select {
+  border: none;
+  background: transparent;
+  outline: none;
+}
+
+.input-box {
+  position: relative;
+}
+
+.input-icon {
+  position: absolute;
+  top: 50%;
+  right: 12px;        /* جوه المربع */
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+}
+
+.formcontrol {
+  width: 100%;
+  padding: 10px 40px 10px 12px; /* مساحة للصورة */
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+}
+.input-box {
+  position: relative !important;
+}
+
+/* القفل داخل المربع يمين */
+.input-icon.lock {
+  position: absolute !important;
+  right: 12px !important;
+  left: auto !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 18px !important;
+  height: 18px !important;
+  pointer-events: none !important;
+}
+
+/* العين داخل المربع شمال */
+.input-icon.eye {
+  position: absolute !important;
+  left: 12px !important;
+  right: auto !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  cursor: pointer !important;
+  font-size: 18px !important;
+  color: #777 !important;
+}
+
+/* مساحة للاتنين */
+.formcontrol {
+  width: 100% !important;
+  padding: 10px 40px !important;
+  border: 1px solid #ccc !important;
+  border-radius: 8px !important;
+}
+
+
+  </style>
+</head>
+
+<body>
+<div class="frames">
+
+  <!-- العمود الأيسر -->
+  <div class="colleft">
+    <div class="chevrons"></div>
+    <div class="chevrons2"></div>
+
+    <div class="mock-wrap">
+      <img class="mock-image" src="/image/47bec28b62a5caf6686dfed5523a4ff692d279cd (1).png">
+      <div class="floating-card card-top-right"><img src="/image/يمين.png"></div>
+      <div class="floating-card card-top-left"><img src="/image/tt.png"></div>
+      <div class="floating-card card-left-mid outo"><img src="/image/المحفظه.png"></div>
+      <div class="floating-card card-left-bottom mock-image hide-mobile"><img src="/image/خدمات الذكاء الصناعي.png"></div>
+      <div class="floating-card card-right-mid non"><img src="/image/كل المنتجات.png"></div>
+      <div class="floating-card card-right-bottom no"><img src="/image/المنتجات.png"></div>
+    </div>
+
+<div class="headlin">إدارة متجرك ما كانت أسهل من كذا!!</div>
+    <div class="subhead">
+      بخطوات بسيطة تقدر تنشئ حسابك وتتحكم بمنتجاتك، طلباتك، ومبيعاتك – الكل في مكان واحد.
+    </div>
+  </div>
+
+
+  <div class="colright">
+
+    <!-- الشعار -->
+    <div class="brands">
+      <img src="/image/f9f831a3dca6f5fbcb89a69383cd9de01ac1e52b (1).png">
+    </div>
+
+    <div class="contain form-area">
+
+      <!-- العنوان -->
+      <h2 class="titl">إدارة متجرك ما كانت أسهل من كذا!!</h2>
+      <p class="subtitl">
+        بخطوات بسيطة تقدر تنشئ حسابك وتتحكم بمنتجاتك، طلباتك، ومبيعاتك – الكل في مكان واحد.
+      </p>
+
+      <!-- الاسم الكامل -->
+<div class="form-group mb-2">
+  <label class="mb-1">الاسم الكامل</label>
+
+  <div class="input-box">
+    <i class="icon">
+      <img src="image/icons/Outline/users/user.svg" alt="">
+    </i>
+    <input type="text" class="formcontrol" placeholder="الاسم كامل">
+  </div>
+</div>
+
+
+      <!-- البريد الإلكتروني -->
+<div class="form-group mb-2">
+  <label class="mb-1">البريد الإلكتروني</label>
+
+  <div class="input-box">
+    <img
+      src="image/icons/Outline/Email/sms.svg"
+      class="input-icon"
+      alt="email"
+    >
+    <input
+      type="email"
+      class="formcontrol"
+      placeholder="Example@gmail.com"
+    >
+  </div>
+</div>
+
+
+
+<div class="formgroup mb-2">
+  <label class="mb-1">رقم الهاتف</label>
+
+  <div class="phone-wrapper">
+    <!-- رقم الهاتف -->
+    <input
+      type="tel"
+      class="phone-input"
+      placeholder="ادخل رقم الهاتف"
+    >
+
+
+  <div class="country-code" style="display: flex; align-items: center; gap: 8px;">
+  <img
+    src="https://flagcdn.com/w20/sa.png"
+    alt="Country Flag"
+    class="flag-img"
+    id="flag_img">
+
+<select class="country-select" id="country_code" onchange="changeFlag(this)">
+  <option value="+966" data-country="sa" selected>+966</option>
+  <option value="+20" data-country="eg">+20</option>
+  <option value="+971" data-country="ae">+971</option>
+  <option value="+1" data-country="us">+1</option>
+</select>
+
+</div>
+  </div>
+</div>
+
+
+
+      <!-- كلمة المرور -->
+      
+<div class="formgroup mb-2">
+  <label class="mb-1">كلمة المرور</label>
+
+  <div class="input-box">
+    <!-- أيقونة القفل -->
+    <img
+      src="image/icons/Outline/Security,car,delivery,Crypto%20Currency,shop/lock-1.svg"
+      class="input-icon lock"
+      alt="lock"
+    >
+
+    <!-- حقل الإدخال -->
+    <input
+      type="password"
+      class="formcontrol"
+      id="password"
+      placeholder="******"
+    >
+
+    <!-- أيقونة العين -->
+    <i
+      class="fa-solid fa-eye input-icon eye"
+      onclick="togglePassword(this)"
+    ></i>
+  </div>
+</div>
+
+      <!-- الموافقة على الشروط -->
+      <div class="d-flex align-items-center mb-3">
+
+        <label class="form-check-label ms-2" for="agree">
+          بالتسجيل انت توافق علي
+          <a href="#" class="blue">الشروط والأحكام</a>
+          و
+          <a href="#" class="blue">سياسة الخصوصية</a>
+        </label>
+      </div>
+
+      <!-- زر التسجيل -->
+      <button class="btn-login">
+        <a   class="btn-login" href="sign_up.html">تابع التسجيل</a> </button>
+
+
+    <div class="signup">
+      لديك حساب سابقاً؟ <a href="/تسجيل الدخول.html">سجّل دخول</a>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script>
+  function changeFlag(element) {
+    // نجيب الصورة عن طريق الـ ID
+    var imgElement = document.getElementById("flag_img");
+
+    // نجيب الخيار المختار
+    var selectedOption = element.options[element.selectedIndex];
+
+    // نجيب كود الدولة من الـ data-country
+    var countryCode = selectedOption.getAttribute("data-country");
+
+    // نغير الصورة
+    if (countryCode) {
+      imgElement.src = "https://flagcdn.com/w20/" + countryCode + ".png";
+    }
+  }
+</script><script>
+  function changeFlag(element) {
+    var imgElement = document.getElementById("flag_img");
+    var selectedOption = element.options[element.selectedIndex];
+    var countryCode = selectedOption.getAttribute("data-country");
+
+    if (countryCode) {
+      imgElement.src = "https://flagcdn.com/w20/" + countryCode + ".png";
+    }
+  }
+</script>
+</body>
+</html>

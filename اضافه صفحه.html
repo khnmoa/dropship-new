@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>اضافه صفحه</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="/assests/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/41.3.1/classic/ckeditor.js"></script>
+
+
+
+<style>
+
+
+
+.preview-box {
+    background: #fff;
+    border: 1px solid #e3e3e3;
+    padding: 15px;
+    border-radius: 12px;
+    text-align: center;
+    height: fit-content;
+}
+
+.preview-image {
+    width: 100%;
+    height: 200px;
+    border-radius: 12px;
+    background: #eee;
+}
+
+.preview-text {
+    margin-top: 10px;
+    color: #777;
+}
+
+
+
+/* زر الحفظ */
+.save-product-btn {
+    margin-top: 20px;
+    background: #c62828;
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 15px;
+    cursor: pointer;
+    width: 180px;
+}
+.dlt{
+  display: flex;
+  justify-content: space-between;
+}
+.upload-preview {
+    display: none;
+    width: 100px;
+    height: 100px;
+    background: #eee;
+    border-radius: 10px;
+    background-size: cover;
+    background-position: center;
+}
+
+.preview-box {
+    background: #fff;
+    border: 1px solid #e3e3e3;
+    padding: 15px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.preview-placeholder {
+    padding: 10px;
+}
+
+.placeholder-image {
+    width: 100%;
+    height: 180px;
+    background: #eee;
+    border-radius: 12px;
+}
+
+.placeholder-line {
+    height: 12px;
+    background: #e5e5e5;
+    margin: 12px 0;
+    border-radius: 6px;
+}
+
+.placeholder-line.small {
+    width: 60%;
+    margin: auto;
+}
+
+.preview-image {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+.uploaded-images {
+    display: flex;
+    gap: 15px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+}
+
+.image-thumb {
+    width: 90px;
+    height: 90px;
+    background: #eee;
+    border-radius: 10px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.delete-icon {
+    position: absolute;
+    top: -7px;
+    right: -7px;
+    background: #d33;
+    color: #fff;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.prev-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 10px 0 5px;
+}
+
+.prev-desc {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.prev-price, .prev-qty {
+    font-size: 14px;
+    color: #333;
+    margin: 4px 0;
+}
+.page-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 20px;
+    margin-top: 25px;
+    direction: ltr;
+}
+
+/* صندوق المعاينة */
+.preview-box {
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid #e3e3e3;
+}
+
+/* placeholder */
+.preview-empty .placeholder-line {
+    height: 12px;
+    background: #e5e5e5;
+    margin: 10px 0;
+    border-radius: 6px;
+}
+
+.placeholder-line.big { height: 20px; }
+.placeholder-line.small { width: 60%; }
+
+/* المعاينة الفعلية */
+.preview-content h2 {
+    margin: 0 0 10px;
+}
+
+.preview-content .small {
+    color: #777;
+    font-size: 13px;
+    margin-bottom: 15px;
+}
+
+/* نموذج الفورم */
+.form-box {
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    border: 1px solid #e3e3e3;
+}
+
+.input, .textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+.form-box{
+      direction: rtl;
+}
+
+body{
+  background-color: #f6f6f6;
+}
+
+
+        /* ====== نموذج الإدخال (الجهة اليمنى) ====== */
+        .form-box {
+            background: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            flex: 2; /* تأخذ مساحة أكبر */
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .title {
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .input {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            border: 1px solid #eee;
+            border-radius: 10px;
+            background-color: #fcfcfc;
+            box-sizing: border-box;
+            text-align: right;
+        }
+
+        .textarea {
+            width: 100%;
+            height: 200px;
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: 10px;
+            background-color: #fff;
+            box-sizing: border-box;
+            resize: vertical;
+        }
+
+        /* ====== صندوق المعاينة (الجهة اليسرى) ====== */
+        .preview-box {
+            background: #fff;
+            padding: 25px;
+            border-radius: 15px;
+            flex: 1; /* مساحة أصغر للمعاينة */
+            min-height: 250px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .preview-empty {
+            width: 100%;
+        }
+
+        .placeholder-line {
+            height: 12px;
+            background: #e0e0e0;
+            margin: 8px auto;
+            border-radius: 5px;
+        }
+        .placeholder-line.big { width: 90%; height: 18px; margin-bottom: 15px; }
+        .placeholder-line.small { width: 60%; }
+
+        .preview-empty p {
+            color: #000;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        /* زر إنشاء الصفحة العلوي */
+
+.header-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1100px;
+    margin: 0 auto 20px auto;
+    direction: ltr;
+}
+
+.page-layout {
+            display: flex;
+            gap: 25px;
+            max-width: 1100px;
+            margin: 0 auto;
+            align-items: flex-start;
+        }
+        .btn-create {
+            background-color: #e58d8d;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .back-link {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+
+</style>
+
+</head>
+
+<body>
+
+<div class="topbar">
+    <img src="/image/f9f831a3dca6f5fbcb89a69383cd9de01ac1e52b (1).png" class="logo" >
+<div class="center-section">
+  <div class="search-wrapper">
+    <input type="text" placeholder="ابحث في الصفحات…" class="search-box">
+    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+  </div>
+</div>
+
+    <div class="icons">
+       <label for="showNotifications" class="icon"><img src="/image/notification-2.svg" alt=""></label>
+
+<input type="checkbox" id="showNotifications" hidden>
+
+<div class="notifications-box">
+    <h3>الإشعارات</h3>
+
+    <div class="item">تم شحن الرصيد– منذ يومين</div>
+    <div class="item">تم شحن الرصيد– منذ ٣ أيام</div>
+    <div class="item">تم شحن الرصيد– منذ ٣ أيام</div>
+    <div class="item">تم شحن الرصيد– منذ ٣ أيام</div>
+
+    <a class="more">عرض الكل</a>
+</div>
+
+        <i class="icon">
+              <a href="متجر الثيمات.html" class="iconss ">
+        <img src="/image/icons/Outline/Computers, Devices, Electronics/game.svg" alt="">
+    </a>
+        </i>
+        <i class="icon">  <a href="app.html" class="iconss ">
+         <img src="/image/icons/Outline/setting/category.svg">
+
+    </a></i>
+    </a></i>
+     <i class="icon" id="theme-toggle" style="cursor: pointer;">
+    <img src="image/icons/Outline/Weather/moon.svg">
+</i>
+</i>
+    </div>
+<div class="store-wrapper">
+  <div class="store-select" id="storeBtn">
+    <img src="/image/121df8e4ff69af84b6cdf0af74303de3d79c0e0c.jpg">
+    <span class="flo">متجر زهور</span>
+    <i class="fa-solid fa-chevron-down arrow"></i> <!-- السهم -->
+  </div>
+
+  <div id="dropdownMenu" class="dropdown-menu">
+    <div class="profile-section">
+      <img src="/image/121df8e4ff69af84b6cdf0af74303de3d79c0e0c.jpg" class="profile-img" />
+      <div class="profile-info">
+        <h3>متجر زهور</h3>
+        <p>الباقة المجانية</p>
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button class="visit-btn">زيارة المتجر <i class="fa-solid fa-link" style="font-size: 14px; color: #888;"></i></button>
+      <a href="الاعدادات.html" class="settings-btn">الإعدادات ⚙️</a>
+    </div>
+
+    <ul class="menu-list">
+      <li><a href="باقه المتجر.html"><img src="/image/icons/Outline/Security,car,delivery,Crypto%20Currency,shop/shop.svg" alt=""> باقه المنتجات</a></li>
+      <li><a href="المحفظه.html" class="menu-link"><img src="/image/icons/Outline/Money/wallet-3.svg" alt="">المحفظة والفواتير</a></li>
+      <li class="logout"><i class="fa-solid fa-right-from-bracket"></i> تسجيل الخروج</li>
+    </ul>
+  </div>
+</div>
+
+
+</div>
+
+ <input type="checkbox" id="menuToggle" hidden>
+<label for="menuToggle" class="menu-btn">☰</label>
+
+<aside class="sidebar" id="sidebar">
+    <ul>
+
+        <li class="section-title">عام</li>
+
+        <li  >
+            <a href="home.html">
+                <span class="icon"><img src="/image/icons/Outline/Essetional/home-2.svg" alt=""></span> الرئيسية
+            </a>
+        </li>
+
+
+
+        <li class="has-submenu ">
+    <div class="menu-item">
+
+            <span class="icon"><img src="image/icons/Outline/Security,car,delivery,Crypto%20Currency,shop/shopping-cart.svg" alt=""></span> الطلبات
+
+        <span class="arrow"><i class="fa-solid fa-angle-down"></i></span>
+    </div>
+
+    <!-- القائمة اللي هتظهر -->
+    <ul class="submenu">
+               <li><a href="الطلبات.html">الطلبات</a></li>
+
+    <li><a href="قسائم.html">القسائم</a></li>
+    </ul>
+</li>
+
+
+       <li class="has-submenu">
+    <div class="menu-item">
+
+            <span class="icon"><img src="/image/icons/Outline/Security,car,delivery,Crypto%20Currency,shop/shop-add.svg" alt=""></span> المنتجات
+
+        <span class="arrow"><i class="fa-solid fa-angle-down"></i></span>
+    </div>
+
+    <!-- القائمة اللي هتظهر -->
+    <ul class="submenu">
+        <li><a href="المنتجات.html">المنتجات</a></li>
+        <li><a href=" القسائم.html">الأقسام</a></li>
+    </ul>
+</li>
+
+
+        <li>
+            <a href="العملاء.html">
+                <span class="icon"><img src="/image/icons/Outline/users/profile-2user.svg" alt=""></span> العملاء
+            </a>
+        </li>
+
+        <li>
+                       <a href="/التقارير.html">
+
+                <span class="icon"><img src="/image/icons/Outline/Business/chart-1.svg" alt=""></span> التقارير
+            </a>
+        </li>
+
+        <li >
+            <a href="التقيمات.html">
+                <span class="icon"><i class="fa-regular fa-star"></i></span> التقييمات
+            </a>
+        </li>
+
+        <li class="active">
+            <a href="الصفحه التعريفيه.html">
+                <span class="icon"><img src="/image/icons/Outline/Archive,time/book-saved.svg" alt=""></span> الصفحات التعريفية
+            </a>
+        </li>
+
+        <li class="section-title">أدوات مساعدة</li>
+
+        <li>
+            <a href="خدمات التاجر.html">
+                <span class="icon"><i class="fa-regular fa-clone"></i></span> خدمات التاجر
+            </a>
+        </li>
+
+        <li>
+            <a href="تفعيل الشحن.html">
+                <span class="icon"><img src="/image/icons/Outline/Security,car,delivery,Crypto%20Currency,shop/ship.svg" alt=""></span> تفعيل الشحن
+            </a>
+        </li>
+
+        <li>
+            <a href="خمات الذكاء الصناعي فعيل.html">
+                <span class="icon"><img src="/image/icons/Outline/content edit/task.svg" alt=""></span> خدمات الذكاء الاصطناعي
+            </a>
+        </li>
+
+        <li class="section-title">الموردين</li>
+
+        <li>
+            <a href="الموردين.html">
+                <span class="icon"><img src="/image/icons/Outline/Search,Astrology,Building/building.svg" alt=""></span> المستودعات السعودية
+            </a>
+        </li>
+
+        <li>
+            <a href="المنتجات الرقميه2.html">
+                <span class="icon"><img src="/image/icons/Outline/Computers, Devices, Electronics/monitor-mobbile.svg" alt=""></span> المنتجات الرقمية
+            </a>
+        </li>
+
+    </ul>
+</aside>
+
+<!-- =============== MAIN CONTENT =============== -->
+<main class="content">
+
+
+<!-- ================== صفحة إضافة منتج ================== -->
+
+
+<div class="header-actions">
+        <button class="btn-create">+ إنشاء الصفحة</button>
+        <a href="#" class="back-link">اضافة صفحة <small><img src="/image/icons/Outline/Arrow/arrow-right-3.svg" alt=""></small></a>
+    </div>
+
+    <div class="page-layout">
+
+        <div class="preview-box" id="previewBox">
+            <div id="previewEmpty" class="preview-empty">
+                <div class="placeholder-line big"></div>
+                <div class="placeholder-line"></div>
+                <div class="placeholder-line"></div>
+                <div class="placeholder-line small"></div>
+                <p>المعاينة تظهر هنا</p>
+            </div>
+
+            <div id="previewContent" class="preview-content" style="display:none;">
+                <h2 id="prevTitle"></h2>
+                <p id="prevLink" class="small"></p>
+                <div id="prevBody" class="preview-body"></div>
+            </div>
+        </div>
+
+        <div class="form-box">
+            <h3 style="margin-top:0; color:#444; font-size: 1.1rem; margin-bottom: 30px;">معلومات الصفحة</h3>
+
+     <div class="input-wrapper">
+    <label>اسم الصفحة</label>
+    <input id="pageTitle" type="text" class="input" placeholder="اعطي الصفحة اسم">
+    <img src="/image/icons/Outline/files/folder-2.svg" class="inside-input" alt="">
+</div>
+<style>
+  .input-wrapper {
+    position: relative;
+    width: 300px; /* طول المربع */
+}
+
+.input-wrapper input {
+    width: 100%;
+    padding: 8px 35px 8px 10px; /* مساحة للصورة من اليمين */
+    box-sizing: border-box;
+}
+
+.input-wrapper .inside-input {
+    position: absolute;
+    right: 10px; /* المسافة من طرف المربع */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px; /* حجم الأيقونة */
+    pointer-events: none; /* تمنع تداخل الصورة مع الكتابة */
+}
+
+</style>
+
+          <div class="input-wrapper">
+    <label>رابط</label>
+    <input id="pageLink" type="text" class="input" placeholder="contact_us">
+    <img src="/image/icons/Outline/Support,%20Like,%20Question/unlimited.svg" class="inside-input" alt="">
+</div>
+<style>
+  .input-wrapper {
+    position: relative;
+    width: 300px; /* طول المربع */
+    margin-bottom: 15px; /* مسافة بين المربعات */
+}
+
+.input-wrapper input {
+    width: 200%;
+    padding: 8px 35px 8px 10px; /* مساحة للصورة على اليمين */
+    box-sizing: border-box;
+}
+
+.input-wrapper .inside-input {
+    position: absolute;
+    right: 10px; /* المسافة من طرف المربع */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px; /* حجم الأيقونة */
+    pointer-events: none; /* تمنع تداخل الصورة مع الكتابة */
+}
+
+</style>
+            <label>محتوى الصفحة</label>
+            <div style="border: 1px solid #eee; border-radius: 10px; padding: 5px; background: #fff;">
+
+                <textarea id="pageContent" class="textarea" style="border:none; height: 150px;" placeholder="اكتب محتوى الصفحة"></textarea>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+
+<script src="/assests/js/اضافه صفحه.js">
+
+</script>
+<script src="/assests/js/home.js"></script>
+<script src="/assests/js/drop.js"></script>
+<script>
+const themeToggle = document.getElementById('theme-toggle');
+let isDark = false;
+
+themeToggle.addEventListener('click', () => {
+    isDark = !isDark;
+
+    if (isDark) {
+       document.body.style.backgroundColor = '#f6f6f6';
+        document.documentElement.style.filter = 'invert(1) hue-rotate(180deg)';
+
+        // الصور والفيديوهات يجب عكسها مرة أخرى لكي لا تظهر ألوانها غريبة
+        const media = document.querySelectorAll('img, video, .profile-img, .logo');
+        media.forEach(item => item.style.filter = 'invert(1) hue-rotate(180deg)');
+
+        // تغيير شكل الأيقونة
+        themeToggle.querySelector('i').classList.replace('fa-moon', 'fa-sun');
+    } else {
+        // العودة للوضع الطبيعي
+        document.documentElement.style.filter = 'none';
+
+        const media = document.querySelectorAll('img, video, .profile-img, .logo');
+        media.forEach(item => item.style.filter = 'none');
+
+        // العودة لأيقونة القمر
+        themeToggle.querySelector('i').classList.replace('fa-sun', 'fa-moon');
+    }
+});
+  </script>
+</body>
+</html>
